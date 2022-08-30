@@ -1,6 +1,5 @@
-package com.labs.math;
+package com.labs.one.math;
 
-import com.labs.one.math.NegativeLucasNumber;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
