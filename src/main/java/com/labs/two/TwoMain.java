@@ -13,39 +13,10 @@ public class TwoMain {
         TrainSchedule trainSchedule = initTrains();
         trainSchedule.print();
 
-        System.out.println("a: Search by destination");
-        System.out.println("b: Search by destination and after X hour");
-        System.out.println("c: Search by destination and common places");
-        System.out.print("Choose: ");
+        List<Train> filtered = filterByChoose(trainSchedule);
 
-        Scanner scanner = new Scanner(System.in);
-        char choose = scanner.next().charAt(0);
-        String destination;
-        List<Train> found;
-        switch (choose) {
-            case 'a':
-                System.out.print("Destination: ");
-                destination = scanner.next();
-                found = trainSchedule.searchDest(destination);
-                break;
-            case 'b':
-                System.out.print("Destination: ");
-                destination = scanner.next();
-                System.out.print("Hour: ");
-                int hour = scanner.nextInt();
-                found = trainSchedule.searchDestAndAfterHour(destination, hour);
-                break;
-            case 'c':
-                System.out.print("Destination: ");
-                destination = scanner.next();
-                found = trainSchedule.searchDestAndHasCommon(destination);
-                break;
-            default:
-                System.out.println("Invalid char");
-                return;
-        }
-        for (int i = 0; i < found.size(); i++) {
-            System.out.println(found.get(i));
+        for (int i = 0; i < filtered.size(); i++) {
+            System.out.println(filtered.get(i));
         }
     }
 
@@ -62,5 +33,35 @@ public class TwoMain {
         trains.add(new Train("Ternopil", LocalDateTime.of(2022, 8, 15, 19, 0), 73, 100, 0, 200, 0));
         trains.add(new Train("Ternopil", LocalDateTime.of(2022, 8, 16, 11, 30), 74, 0, 300, 200, 30));
         return new TrainSchedule(trains);
+    }
+
+    public static List<Train> filterByChoose(TrainSchedule trainSchedule) {
+        System.out.println("a: Search by destination");
+        System.out.println("b: Search by destination and after X hour");
+        System.out.println("c: Search by destination and common places");
+        System.out.print("Choose: ");
+
+        Scanner scanner = new Scanner(System.in);
+        char choose = scanner.next().charAt(0);
+        String destination;
+        List<Train> found;
+        switch (choose) {
+            case 'a':
+                System.out.print("Destination: ");
+                destination = scanner.next();
+                return trainSchedule.searchDest(destination);
+            case 'b':
+                System.out.print("Destination: ");
+                destination = scanner.next();
+                System.out.print("Hour: ");
+                int hour = scanner.nextInt();
+                return trainSchedule.searchDestAndAfterHour(destination, hour);
+            case 'c':
+                System.out.print("Destination: ");
+                destination = scanner.next();
+                return trainSchedule.searchDestAndHasCommon(destination);
+            default:
+                throw new IllegalArgumentException("Invalid input choose.");
+        }
     }
 }
