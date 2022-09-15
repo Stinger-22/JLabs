@@ -124,6 +124,6 @@ public class Train extends Transport {
 
     @Override
     public int hashCode() {
-        return Objects.hash(number, common, coupe, platzkart, lux);
+        return Objects.hash(number, common, coupe, platzkart, lux, destination, departure);
     }
 }
