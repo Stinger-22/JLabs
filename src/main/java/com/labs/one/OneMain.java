@@ -22,8 +22,8 @@ public class OneMain {
 
     public static List<NegativeLucasNumber> inputFromConsole(String[] args) {
         List<NegativeLucasNumber> lucasNumbers = new ArrayList<>();
-        for (int i = 0; i < args.length; i++) {
-            lucasNumbers.add(new NegativeLucasNumber(Integer.parseInt(args[i])));
+        for (String arg : args) {
+            lucasNumbers.add(new NegativeLucasNumber(Integer.parseInt(arg)));
         }
         return lucasNumbers;
     }
@@ -42,8 +42,8 @@ public class OneMain {
     }
 
     public static void printLucasNumbers(List<NegativeLucasNumber> lucasNumbers) {
-        for (int i = 0; i < lucasNumbers.size(); i++) {
-            System.out.println(lucasNumbers.get(i));
+        for (NegativeLucasNumber lucasNumber : lucasNumbers) {
+            System.out.println(lucasNumber);
         }
     }
 }
