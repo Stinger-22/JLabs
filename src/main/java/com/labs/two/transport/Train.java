@@ -1,6 +1,7 @@
 package com.labs.two.transport;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Extends class Transport to represent Train
@@ -109,5 +110,20 @@ public class Train extends Transport {
     public String toString() {
         return "Train{" + "destination='" + destination + '\'' + ", departure='" + departure.format(dateDefaultFormat) +
                 "' number=" + number + ", common=" + common + ", coupe=" + coupe + ", platzkart=" + platzkart + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Train train = (Train) o;
+        return number == train.number && common == train.common && coupe == train.coupe &&
+               platzkart == train.platzkart && lux == train.lux && destination.equals(train.destination) &&
+               departure.equals(train.departure);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(number, common, coupe, platzkart, lux);
     }
 }

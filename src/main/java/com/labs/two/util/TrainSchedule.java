@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Class to represent schedule of trains with capabilities of searching for trains, adding or removing trains.
+ */
 public class TrainSchedule implements Printable {
     private List<Train> trains;
 
@@ -23,6 +26,13 @@ public class TrainSchedule implements Printable {
      */
     public TrainSchedule(List<Train> trains) {
         this.trains = trains;
+    }
+
+    /**
+     * Construct empty TrainSchedule
+     */
+    public TrainSchedule() {
+        this.trains = new ArrayList<>();
     }
 
     /**
@@ -50,9 +60,9 @@ public class TrainSchedule implements Printable {
      */
     public List<Train> searchDest(String destination) {
         List<Train> filteredTrains = new ArrayList<>();
-        for (int i = 0; i < trains.size(); i++) {
-            if (trains.get(i).getDestination().equals(destination)) {
-                filteredTrains.add(trains.get(i));
+        for (Train train : trains) {
+            if (train.getDestination().equals(destination)) {
+                filteredTrains.add(train);
             }
         }
         return filteredTrains;
@@ -67,10 +77,10 @@ public class TrainSchedule implements Printable {
     public List<Train> searchDestAndAfterHour(String destination, int hour) {
         List<Train> filteredTrains = new ArrayList<>();
         Train train;
-        for (int i = 0; i < trains.size(); i++) {
-            train = trains.get(i);
+        for (Train value : trains) {
+            train = value;
             if (train.getDestination().equals(destination) && train.getDeparture().getHour() > hour) {
-                    filteredTrains.add(train);
+                filteredTrains.add(train);
             }
         }
         return filteredTrains;
@@ -84,8 +94,8 @@ public class TrainSchedule implements Printable {
     public List<Train> searchDestAndHasCommon(String destination) {
         List<Train> filteredTrains = new ArrayList<>();
         Train train;
-        for (int i = 0; i < trains.size(); i++) {
-            train = trains.get(i);
+        for (Train value : trains) {
+            train = value;
             if (train.getDestination().equals(destination) && train.getCommon() > 0) {
                 filteredTrains.add(train);
             }
@@ -97,8 +107,8 @@ public class TrainSchedule implements Printable {
      * Print in console
      */
     public void print() {
-        for (int i = 0; i < trains.size(); i++) {
-            System.out.println(trains.get(i));
+        for (Train train : trains) {
+            System.out.println(train);
         }
     }
 }
