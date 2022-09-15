@@ -1,19 +1,23 @@
 package com.labs.one.math;
 
 /**
- * Class which is a container for negative lucas numbers
- * Example of Negative Lucas series: {..., -11, 7, -4, 3, -1, 2}
+ * Immutable class which is a container for negative Lucas number
  */
 public class NegativeLucasNumber {
-    private int n;
-    private int value;
+    private static final NegativeLucasSeries negativeLucasSeries = new NegativeLucasSeries();
+
+    private final int n;
+    private final int value;
 
     /**
      * Constructs container for Lucas number. Finds value of nth Lucas number
      * @param n Nth Lucas number
      */
     public NegativeLucasNumber(int n) {
-        this.value = findNegativeLucasValue(n);
+        if (n > 0) {
+            throw new IllegalArgumentException("Parameter number must be negative number or zero.");
+        }
+        this.value = negativeLucasSeries.get(n);
         this.n = n;
     }
 
@@ -42,23 +46,45 @@ public class NegativeLucasNumber {
         return "LucasNumber{" + "n=" + n + ", value=" + value + '}';
     }
 
-    private int findNegativeLucasValue(int n) {
-        if (n > 0) {
-            throw new IllegalArgumentException("Parameter number must be negative number or zero.");
+    /**
+     * Class which is a container for negative lucas series
+     * Example of Negative Lucas series: {..., -11, 7, -4, 3, -1, 2}
+     */
+    private static class NegativeLucasSeries {
+        private final int MAX_N = 45;
+        private int generated = 2;
+        private final int[] negativeLucasSeries = new int[MAX_N];
+
+        /**
+         * Initialize two first numbers for negative Lucas series
+         */
+        public NegativeLucasSeries() {
+            negativeLucasSeries[0] = 2;
+            negativeLucasSeries[1] = -1;
         }
-        n = -n;
-        if (n == 0) {
-            return 2;
+
+        /**
+         * Get negative Lucas number by index
+         * @param i Index of negative Lucas number. Index should be negative
+         * @return Value of ith negative Lucas number
+         */
+        public int get(int i) {
+            if (i < -generated) {
+                generateNegativeLucasSeries(i);
+            }
+            return negativeLucasSeries[-i];
         }
-        if (n == 1) {
-            return -1;
+
+        public void generateNegativeLucasSeries(int n) {
+            n = -n;
+            int a = negativeLucasSeries[generated - 2], b = negativeLucasSeries[generated - 1], t;
+            while (generated <= n) {
+                t = a - b;
+                a = b;
+                b = t;
+                negativeLucasSeries[generated] = t;
+                generated++;
+            }
         }
-        int a = 2, b = 1, t = -1;
-        for (int i = 2; i <= n; i++) {
-            t = a + b;
-            a = b;
-            b = t;
-        }
-        return (n & 1) == 1 ? -t : t;
     }
 }
