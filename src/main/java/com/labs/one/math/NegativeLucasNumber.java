@@ -77,6 +77,9 @@ public class NegativeLucasNumber {
 
         public void generateNegativeLucasSeries(int n) {
             n = -n;
+            if (n >= MAX_N) {
+                throw new IllegalArgumentException("This N value of Lucas number exceeds int size.");
+            }
             int a = negativeLucasSeries[generated - 2], b = negativeLucasSeries[generated - 1], t;
             while (generated <= n) {
                 t = a - b;
