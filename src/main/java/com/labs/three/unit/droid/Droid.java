@@ -17,11 +17,6 @@ public abstract class Droid implements Unit {
         this.name = name;
     }
 
-    public void attack(Unit target) {
-        int damage = getTotalDamage();
-        target.doDefend(damage);
-    }
-
-    public abstract void doDefend(int incomingDamage);
+    public abstract int defend(int incomingDamage);
     public abstract int getTotalDamage();
 }

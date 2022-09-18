@@ -1,6 +1,6 @@
 package com.labs.three.unit.droid;
 
-import java.util.concurrent.ThreadLocalRandom;
+import static com.labs.three.util.Math.randomNumber;
 
 public class CommonDroid extends Droid {
     private int healthCurrent;
@@ -67,12 +67,8 @@ public class CommonDroid extends Droid {
 
     @Override
     public String toString() {
-        return "CommonDroid{" +
-                "healthCurrent=" + healthCurrent +
-//                ", healthMax=" + healthMax +
-                ", damageMin=" + damageMin +
-                ", damageMax=" + damageMax +
-                ", armor=" + armor +
+        return "CommonDroid{ health: " + healthCurrent + "/" + healthMax +
+                ", damage: " + damageMin + "-" + damageMax + ", armor=" + armor +
                 ", name='" + name + '\'' + "}";
     }
 
@@ -82,12 +78,23 @@ public class CommonDroid extends Droid {
     }
 
     @Override
-    public void doDefend(int damage) {
+    public int defend(int damage) {
+        int gotDamaged = (damage > armor ? damage - armor : 0 );
         healthCurrent -= (damage > armor ? damage - armor : 0 );
+        return gotDamaged;
     }
 
     @Override
     public int getTotalDamage() {
-        return ThreadLocalRandom.current().nextInt(damageMin, damageMax + 1);
+        return randomNumber(damageMin, damageMax);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CommonDroid that = (CommonDroid) o;
+        return healthCurrent == that.healthCurrent && healthMax == that.healthMax && damageMin == that.damageMin &&
+               damageMax == that.damageMax && armor == that.armor && name.equals(that.name);
     }
 }
