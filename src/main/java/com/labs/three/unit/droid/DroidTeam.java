@@ -20,10 +20,23 @@ public class DroidTeam implements Iterable<Droid>{
         this.iterator = new ListCircularIterator<>(team);
     }
 
+    public DroidTeam() {
+        this.team = new ArrayList<>();
+        this.iterator = new ListCircularIterator<>(team);
+    }
+
     public void swap(int a, int b) {
         Droid t = team.get(a);
         team.set(a, team.get(b));
         team.set(b, t);
+    }
+
+    public void addDroid(Droid droid) {
+        this.team.add(droid);
+    }
+
+    public void removeDroid(Droid droid) {
+        this.team.remove(droid);
     }
 
     public boolean isAlive() {
