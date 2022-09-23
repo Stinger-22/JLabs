@@ -67,6 +67,10 @@ public class CommonDroid extends Droid {
         this.armor = armor;
     }
 
+    public CommonDroid copy() {
+        return new CommonDroid(name, healthMax, damageMin, damageMax, armor);
+    }
+
     @Override
     public String toString() {
         return "CommonDroid{ health: " + healthCurrent + "/" + healthMax +

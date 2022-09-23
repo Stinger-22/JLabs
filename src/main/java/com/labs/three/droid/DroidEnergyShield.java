@@ -21,6 +21,10 @@ public class DroidEnergyShield extends CommonDroid {
         this.energyShield = energyShield;
     }
 
+    public DroidEnergyShield copy() {
+        return new DroidEnergyShield(name, healthMax, damageMin, damageMax, armor, energyShield);
+    }
+
     @Override
     public int defend(int damage) {
         if (energyShield > 0) {
