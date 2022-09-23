@@ -1,17 +1,13 @@
-package com.labs.three.unit.droid;
+package com.labs.three.droid;
 
 import static com.labs.three.util.Math.randomNumber;
 
 public class CommonDroid extends Droid {
-    private int healthCurrent;
-    private int healthMax;
-    private int damageMin;
-    private int damageMax;
-    private int armor;
-
-//    private List<Effect> effects;
-//    private List<Effect> abilities;
-
+    protected int healthCurrent;
+    protected int healthMax;
+    protected int damageMin;
+    protected int damageMax;
+    protected int armor;
 
     public CommonDroid(String name, int healthMax, int damageMin, int damageMax, int armor) {
         super(name);
@@ -20,9 +16,15 @@ public class CommonDroid extends Droid {
         this.damageMin = damageMin;
         this.damageMax = damageMax;
         this.armor = armor;
+    }
 
-//        this.effects = new ArrayList<>();
-//        this.abilities = new ArrayList<>();
+    public CommonDroid(CommonDroid droid) {
+        super(droid.getName());
+        this.healthCurrent = droid.getHealthMax();
+        this.healthMax = droid.getHealthMax();
+        this.damageMin = droid.getDamageMin();
+        this.damageMax = droid.getHealthMax();
+        this.armor = droid.getArmor();
     }
 
     public int getHealthCurrent() {
@@ -72,7 +74,6 @@ public class CommonDroid extends Droid {
                 ", name='" + name + '\'' + "}";
     }
 
-    @Override
     public boolean isAlive() {
         return healthCurrent > 0;
     }
@@ -80,7 +81,7 @@ public class CommonDroid extends Droid {
     @Override
     public int defend(int damage) {
         int gotDamaged = (damage > armor ? damage - armor : 0 );
-        healthCurrent -= (damage > armor ? damage - armor : 0 );
+        healthCurrent -= gotDamaged;
         return gotDamaged;
     }
 

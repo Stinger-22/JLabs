@@ -1,8 +1,6 @@
-package com.labs.three.unit.droid;
+package com.labs.three.droid;
 
-import com.labs.three.unit.Unit;
-
-public abstract class Droid implements Unit {
+public abstract class Droid {
     protected String name;
 
     public Droid(String name) {
