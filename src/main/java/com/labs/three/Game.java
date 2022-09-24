@@ -89,7 +89,6 @@ public class Game {
         String path;
         System.out.print("Path: ");
         path = scanner.next();
-        System.out.println("PATH: " + path);
         Scanner fileScanner = new Scanner(new FileReader(path));
         while (fileScanner.hasNext()) {
             System.out.println(fileScanner.nextLine());
@@ -130,7 +129,7 @@ public class Game {
         System.out.println("2. Show droid list");
         System.out.println("3. Battle 1 vs 1");
         System.out.println("4. Team battle");
-        System.out.println("5. Save battle in file");
+        System.out.println("5. Save last battle in file");
         System.out.println("6. Read battle from file");
         System.out.println("7. Exit");
         System.out.print("\tUSER: ");
@@ -215,7 +214,7 @@ public class Game {
         System.out.println("1. Common droid");
         System.out.println("2. Droid energy shield");
         System.out.println("3. Droid melting");
-        System.out.print("\tUSER: ");
+        System.out.print("\tPlayer: ");
     }
 
     public void printDroidList() {
