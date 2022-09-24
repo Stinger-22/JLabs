@@ -1,70 +1,133 @@
 package com.labs.three.arena;
 
-import com.labs.three.unit.droid.Droid;
-import com.labs.three.unit.droid.DroidTeam;
-import com.labs.three.util.ListCircularIterator;
+import com.labs.three.droid.CommonDroid;
+import com.labs.three.droid.DroidTeam;
 
-public abstract class Arena {
-    protected final DroidTeam team1;
-    protected final DroidTeam team2;
+import java.io.FileNotFoundException;
 
-    // TODO: deep copy
-    public Arena(Droid droid1, Droid droid2) {
-        this.team1 = new DroidTeam(droid1);
-        this.team2 = new DroidTeam(droid2);
-    }
+import static com.labs.three.util.Math.randomNumber;
 
-    // TODO: deep copy
-    public Arena(DroidTeam team1, DroidTeam team2) {
+public abstract class Arena implements IArena {
+    private DroidTeam team1;
+    private DroidTeam team2;
+
+    private int iAttackerTeam1 = 0;
+    private int iAttackerTeam2 = 0;
+
+    private static final ArenaView view = new ArenaView();
+
+    public void setTeam1(DroidTeam team1) {
         this.team1 = team1;
-        this.team2 = team2;
+        applyPermanentEffect(team1);
     }
 
-    protected void punch(ListCircularIterator<Droid> attackerTeam, DroidTeam defenderTeam) {
-        int damage, hit;
-        Droid attacker, defender;
+    public void setTeam2(DroidTeam team2) {
+        this.team2 = team2;
+        applyPermanentEffect(team2);
+    }
 
-        attacker = chooseAttacker(attackerTeam);
+    protected int punch(DroidTeam attackerTeam, int iAttacker, DroidTeam defenderTeam) {
+        int died = 0;
+
+        int damage, hit;
+        CommonDroid attacker, defender;
+
+        attacker = chooseAttacker(attackerTeam, iAttacker);
         defender = chooseDefender(defenderTeam);
 
         damage = attacker.getTotalDamage();
         hit = defender.defend(damage);
+        if (!attacker.isAlive()) {
+            attackerTeam.removeDroid(attacker);
+            died ^= 1;
+        }
         if (!defender.isAlive()) {
-            defenderTeam.remove(defender);
+            defenderTeam.removeDroid(defender);
+            died ^= 2;
         }
 
-        printPunchInfo(attacker, defender, damage, hit);
+        view.printPunchInfo(attacker, defender, damage, hit);
+        view.loadToStringBuilder(attacker, defender, damage, hit);
+        return died;
     }
 
     // TODO: handle if droids have zero attack
     public DroidTeam fight() {
-        ListCircularIterator<Droid> iteratorTeam1, iteratorTeam2;
-        do {
-            iteratorTeam1 = team1.iterator();
-            if (iteratorTeam1.hasNext()) {
-                punch(iteratorTeam1, team2);
+        view.initStringBuilder(team1, team2);
+
+        if (team1 == null || team2 == null) {
+            throw new IllegalStateException("Arena must have two teams.");
+        }
+
+        int died;
+        while (true) {
+            if (team1.isAlive() && team2.isAlive()) {
+                died = punch(team1, iAttackerTeam1, team2);
+                if ((died & 1) == 1) {
+                    iAttackerTeam1++;
+                }
+                if ((died & 2) == 2) {
+                    iAttackerTeam2--;
+                }
+                if (iAttackerTeam1 >= team1.size()) {
+                    iAttackerTeam1 = 0;
+                }
+                if (iAttackerTeam2 < 0) {
+                    iAttackerTeam2 = 0;
+                }
             }
-            iteratorTeam2 = team2.iterator();
-            if (iteratorTeam2.hasNext()) {
-                punch(iteratorTeam2, team1);
+            if (team1.isAlive() && team2.isAlive()) {
+                died = punch(team2, iAttackerTeam2, team1);
+                if ((died & 1) == 1) {
+                    iAttackerTeam2++;
+                }
+                if ((died & 2) == 2) {
+                    iAttackerTeam1--;
+                }
+                if (iAttackerTeam2 >= team2.size()) {
+                    iAttackerTeam2 = 0;
+                }
+                if (iAttackerTeam1 < 0) {
+                    iAttackerTeam1 = 0;
+                }
             }
-        } while (team1.isAlive() && team2.isAlive());
+            else {
+                break;
+            }
+        }
+
         if (team1.isAlive()) {
+            view.saveFightEnd(team1);
             return team1;
         }
         else if (team2.isAlive()) {
+            view.saveFightEnd(team2);
             return team2;
         }
-        else return null;
+        else {
+            view.saveFightEnd(null);
+            return null;
+        }
     }
 
-    protected abstract Droid chooseAttacker(ListCircularIterator<Droid> iterator);
-    protected abstract Droid chooseDefender(DroidTeam droidTeam);
+    private CommonDroid chooseAttacker(DroidTeam droidTeam, int iAttacker) {
+        return droidTeam.get(iAttacker);
+    }
 
-    private void printPunchInfo(Droid attacker, Droid defender, int damage, int hit) {
-        System.out.println("Attacker: " + attacker);
-        System.out.println("Attacker damage: " + damage);
-        System.out.println("Defender got hit by: " + hit + " damage");
-        System.out.println("Defender: " + defender + "\n\n");
+    private CommonDroid chooseDefender(DroidTeam droidTeam) {
+        int random = randomNumber(0, droidTeam.size() - 1);
+        return droidTeam.get(random);
+    }
+
+    protected abstract void permanentEffect(CommonDroid droid);
+
+    private void applyPermanentEffect(DroidTeam droidTeam) {
+        for (int i = 0; i < droidTeam.size(); i++) {
+            permanentEffect(droidTeam.get(i));
+        }
+    }
+
+    public static void saveLastFight(String path) throws FileNotFoundException {
+        view.saveFightToFile(path);
     }
 }

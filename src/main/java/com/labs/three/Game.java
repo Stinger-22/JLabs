@@ -2,11 +2,11 @@ package com.labs.three;
 
 import static com.labs.three.util.Math.randomNumber;
 
-import com.labs.three.arena.ArenaClassic;
-import com.labs.three.arena.ArenaVolcano;
-import com.labs.three.arena.IArena;
+import com.labs.three.arena.*;
 import com.labs.three.droid.*;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -16,7 +16,6 @@ public class Game {
     private final List<CommonDroid> droids;
     private final List<IArena> arenas;
     Scanner scanner;
-    StringBuilder stringBuilder;
 
     public Game() {
         this.droids = new ArrayList<>();
@@ -36,7 +35,7 @@ public class Game {
 
     private int doMenu() throws InputMismatchException {
         printMenu();
-        int choose, random;
+        int choose;
         try {
             choose = scanner.nextInt();
             switch (choose) {
@@ -52,36 +51,19 @@ public class Game {
                     printDroidList();
                     break;
                 case 3:
-                    try {
-                        System.out.print("Choose two droids by number in list of droids\nChoose first droid: ");
-                        random = randomNumber(0, arenas.size());
-                        arenas.get(random).setTeam1(new DroidTeam(chooseDroid().copy()) );
-                        System.out.print("Choose second droid: ");
-                        arenas.get(random).setTeam2(new DroidTeam(chooseDroid().copy()) );
-                        arenas.get(random).fight();
-                    }
-                    catch (IndexOutOfBoundsException exception) {
-                        System.out.println("Wrong number of droid in list");
-                    }
+                    setupDuel();
                     break;
                 case 4:
-                    System.out.println("Choose droids by number in list of droids. Enter -1 to end input.");
-                    random = randomNumber(0, arenas.size());
-                    System.out.println("Choose droids for first team");
-                    DroidTeam team1 = chooseDroidTeam();
-                    System.out.println("Choose droids for second team: ");
-                    DroidTeam team2 = chooseDroidTeam();
-                    arenas.get(random).setTeam2(team2);
-
-                    arenas.get(random).setTeam1(team1);
-                    arenas.get(random).setTeam2(team2);
-                    System.out.println("WINNER: " + arenas.get(random).fight());
+                    setupTeamBattle();
                     break;
                 case 5:
-                    System.out.println("TODO");
+                    String path;
+                    System.out.print("Path to file: ");
+                    path = scanner.next();
+                    Arena.saveLastFight(path);
                     break;
                 case 6:
-                    System.out.println("TODO");
+                    readFile();
                     break;
                 case 7:
                     return 0;
@@ -92,13 +74,57 @@ public class Game {
             return 1;
         }
         catch (InputMismatchException exception) {
-            System.out.println("You should write only numbers to select command");
+            System.out.println("You should write only numbers to select command.");
+            scanner.nextLine();
+            return 1;
+        }
+        catch (FileNotFoundException exception) {
+            System.out.println("File not found.");
             scanner.nextLine();
             return 1;
         }
     }
 
-    public static void printMenu() {
+    private void readFile() throws FileNotFoundException {
+        String path;
+        System.out.print("Path: ");
+        path = scanner.next();
+        System.out.println("PATH: " + path);
+        Scanner fileScanner = new Scanner(new FileReader(path));
+        while (fileScanner.hasNext()) {
+            System.out.println(fileScanner.nextLine());
+        }
+    }
+
+    private void setupDuel() {
+        try {
+            System.out.print("Choose two droids by number in list of droids\nChoose first droid: ");
+            int random = randomNumber(0, arenas.size());
+            arenas.get(random).setTeam1(new DroidTeam(chooseDroid().copy()) );
+            System.out.print("Choose second droid: ");
+            arenas.get(random).setTeam2(new DroidTeam(chooseDroid().copy()) );
+            arenas.get(random).fight();
+        }
+        catch (IndexOutOfBoundsException exception) {
+            System.out.println("Wrong number of droid in list");
+        }
+    }
+
+    private void setupTeamBattle() {
+        System.out.println("Choose droids by number in list of droids. Enter -1 to end input.");
+        int random = randomNumber(0, arenas.size());
+        System.out.println("Choose droids for first team");
+        DroidTeam team1 = chooseDroidTeam();
+        System.out.println("Choose droids for second team: ");
+        DroidTeam team2 = chooseDroidTeam();
+        arenas.get(random).setTeam2(team2);
+
+        arenas.get(random).setTeam1(team1);
+        arenas.get(random).setTeam2(team2);
+        System.out.println("WINNER: " + arenas.get(random).fight());
+    }
+
+    private void printMenu() {
         System.out.println("\t\t\t----MENU----");
         System.out.println("1. Create droid");
         System.out.println("2. Show droid list");
