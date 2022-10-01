@@ -44,7 +44,9 @@ public class DroidMelting extends CommonDroid {
     }
 
     public DroidMelting copy() {
-        return new DroidMelting(name, healthMax, damageMin, damageMax, armor, healthHurt, additionalDamage);
+        DroidMelting droid = new DroidMelting(name, healthMax, damageMin, damageMax, armor, healthHurt, additionalDamage);
+        droid.setEffect(this.getEffect());
+        return droid;
     }
 
     @Override

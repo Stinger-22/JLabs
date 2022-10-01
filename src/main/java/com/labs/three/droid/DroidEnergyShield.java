@@ -22,7 +22,9 @@ public class DroidEnergyShield extends CommonDroid {
     }
 
     public DroidEnergyShield copy() {
-        return new DroidEnergyShield(name, healthMax, damageMin, damageMax, armor, energyShield);
+        DroidEnergyShield droid = new DroidEnergyShield(name, healthMax, damageMin, damageMax, armor, energyShield);
+        droid.setEffect(this.getEffect());
+        return droid;
     }
 
     @Override

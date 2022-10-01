@@ -2,6 +2,8 @@ package com.labs.three.arena;
 
 import com.labs.three.droid.CommonDroid;
 import com.labs.three.droid.DroidTeam;
+import com.labs.three.effect.Effect;
+import com.labs.three.effect.EffectType;
 
 import java.io.FileNotFoundException;
 
@@ -13,6 +15,8 @@ public abstract class Arena implements IArena {
 
     private int iAttackerTeam1 = 0;
     private int iAttackerTeam2 = 0;
+
+    Effect droidEffect;
 
     private static final ArenaView view = new ArenaView();
 
@@ -31,22 +35,70 @@ public abstract class Arena implements IArena {
 
         int damage, hit;
         CommonDroid attacker, defender;
-
         attacker = chooseAttacker(attackerTeam, iAttacker);
         defender = chooseDefender(defenderTeam);
 
         damage = attacker.getTotalDamage();
+
+        droidEffect = attacker.getEffect();
+        if (droidEffect != null) {
+            switch (droidEffect.type()) {
+                case ON_ATTACK_TO_DEFENDER:
+                    defender.applyEffect(droidEffect);
+                    break;
+                case ON_ATTACK_TO_ATTACKER:
+                    attacker.applyEffect(droidEffect);
+                    break;
+//                case ON_ATTACK_TO_DEFEND_TEAM:
+//                    defenderTeam.applyEffect(droidEffect);
+//                    break;
+//                case ON_ATTACK_TO_ATTACK_TEAM:
+//                    attackerTeam.applyEffect(droidEffect);
+//                    break;
+//                case ON_ATTACK_TO_ALL:
+//                    attackerTeam.applyEffect(droidEffect);
+//                    defenderTeam.applyEffect(droidEffect);
+            }
+        }
+
         hit = defender.defend(damage);
+
+        droidEffect = defender.getEffect();
+        if (droidEffect != null) {
+            switch (droidEffect.type()) {
+                case ON_DEFEND_TO_DEFENDER:
+                    defender.applyEffect(droidEffect);
+                    break;
+                case ON_DEFEND_TO_ATTACKER:
+                    attacker.applyEffect(droidEffect);
+                    break;
+//                case ON_DEFEND_TO_DEFEND_TEAM:
+//                    defenderTeam.applyEffect(droidEffect);
+//                    break;
+//                case ON_DEFEND_TO_ATTACK_TEAM:
+//                    attackerTeam.applyEffect(droidEffect);
+//                    break;
+//                case ON_DEFEND_TO_ALL:
+//                    attackerTeam.applyEffect(droidEffect);
+//                    defenderTeam.applyEffect(droidEffect);
+            }
+        }
+
         if (!attacker.isAlive()) {
             attackerTeam.removeDroid(attacker);
             died ^= 1;
+
+            droidEffect = attacker.getEffect();
+//            if (droidEffect.type() == EffectType.ON_DEATH) {
+//
+//            }
         }
         if (!defender.isAlive()) {
             defenderTeam.removeDroid(defender);
             died ^= 2;
         }
 
-        view.printPunchInfo(attacker, defender, damage, hit);
+        view.printPunchInfo(attacker, defender, damage, hit, attacker.getEffect());
         view.loadToStringBuilder(attacker, defender, damage, hit);
         return died;
     }

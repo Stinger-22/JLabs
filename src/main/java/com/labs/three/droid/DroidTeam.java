@@ -1,9 +1,12 @@
 package com.labs.three.droid;
 
+import com.labs.three.effect.Affectable;
+import com.labs.three.effect.Effect;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class DroidTeam{
+public class DroidTeam implements Affectable {
     private List<CommonDroid> team;
 
     public DroidTeam(List<CommonDroid> team) {
@@ -49,5 +52,10 @@ public class DroidTeam{
 
     public int size() {
         return team.size();
+    }
+
+    @Override
+    public void applyEffect(Effect effect) {
+        effect.apply(this);
     }
 }

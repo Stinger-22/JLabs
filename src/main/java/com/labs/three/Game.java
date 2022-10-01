@@ -4,6 +4,8 @@ import static com.labs.three.util.Math.randomNumber;
 
 import com.labs.three.arena.*;
 import com.labs.three.droid.*;
+import com.labs.three.effect.DischargeEnergyShield;
+import com.labs.three.effect.RepairTeam;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -98,7 +100,7 @@ public class Game {
     private void setupDuel() {
         try {
             System.out.print("Choose two droids by number in list of droids\nChoose first droid: ");
-            int random = randomNumber(0, arenas.size());
+            int random = randomNumber(0, arenas.size() - 1);
             arenas.get(random).setTeam1(new DroidTeam(chooseDroid().copy()) );
             System.out.print("Choose second droid: ");
             arenas.get(random).setTeam2(new DroidTeam(chooseDroid().copy()) );
@@ -137,9 +139,18 @@ public class Game {
 
     private void initStandardDroids() {
         droids.add(new CommonDroid("K9-0tron", 100, 7, 11, 0));
+
         droids.add(new CommonDroid("Framebot", 120, 2, 6, 0));
+
         droids.add(new DroidEnergyShield("Bubblebot", 40, 5, 17, 2, 40));
+
         droids.add(new DroidMelting("Steel Rager", 50, 3, 12, -3, 5, 3));
+
+        droids.add(new CommonDroid("DISCHARGOTRON", 70, 5, 7, 2));
+        droids.get(droids.size() - 1).setEffect(new DischargeEnergyShield(15));
+
+//        droids.add(new CommonDroid("Upgraded Repair Bot", 35, 1, 3, 0));
+//        droids.get(droids.size() - 1).setEffect(new RepairTeam(4));
     }
 
     private void initStandardArenas() {

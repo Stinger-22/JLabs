@@ -1,13 +1,18 @@
 package com.labs.three.droid;
 
+import com.labs.three.effect.Affectable;
+import com.labs.three.effect.Effect;
+
 import static com.labs.three.util.Math.randomNumber;
 
-public class CommonDroid extends Droid {
+public class CommonDroid extends Droid implements Affectable {
     protected int healthCurrent;
     protected int healthMax;
     protected int damageMin;
     protected int damageMax;
     protected int armor;
+
+    Effect effect;
 
     public CommonDroid(String name, int healthMax, int damageMin, int damageMax, int armor) {
         super(name);
@@ -25,6 +30,7 @@ public class CommonDroid extends Droid {
         this.damageMin = droid.getDamageMin();
         this.damageMax = droid.getHealthMax();
         this.armor = droid.getArmor();
+        this.effect = droid.effect;
     }
 
     public int getHealthCurrent() {
@@ -67,8 +73,18 @@ public class CommonDroid extends Droid {
         this.armor = armor;
     }
 
+    public Effect getEffect() {
+        return effect;
+    }
+
+    public void setEffect(Effect effect) {
+        this.effect = effect;
+    }
+
     public CommonDroid copy() {
-        return new CommonDroid(name, healthMax, damageMin, damageMax, armor);
+        CommonDroid droid = new CommonDroid(name, healthMax, damageMin, damageMax, armor);
+        droid.setEffect(this.getEffect());
+        return droid;
     }
 
     @Override
@@ -92,6 +108,11 @@ public class CommonDroid extends Droid {
     @Override
     public int getTotalDamage() {
         return randomNumber(damageMin, damageMax);
+    }
+
+    @Override
+    public void applyEffect(Effect effect) {
+        effect.apply(this);
     }
 
     @Override
