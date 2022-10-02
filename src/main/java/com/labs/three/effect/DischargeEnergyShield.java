@@ -4,6 +4,9 @@ import com.labs.three.droid.CommonDroid;
 import com.labs.three.droid.DroidEnergyShield;
 import com.labs.three.droid.DroidTeam;
 
+/**
+ * Effect which applies on droid attack and decreases amount of energy shield if defender has any
+ */
 public class DischargeEnergyShield implements Effect{
     int dischargeAmount;
 

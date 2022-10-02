@@ -120,7 +120,7 @@ public abstract class Arena implements IArena {
 
         int died;
         while (true) {
-            if (team1.isAlive() && team2.isAlive()) {
+            if (team1.isEmpty() && team2.isEmpty()) {
                 died = punch(team1, iAttackerTeam1, team2);
                 if ((died & 1) == 1) {
                     iAttackerTeam1++;
@@ -135,7 +135,7 @@ public abstract class Arena implements IArena {
                     iAttackerTeam2 = 0;
                 }
             }
-            if (team1.isAlive() && team2.isAlive()) {
+            if (team1.isEmpty() && team2.isEmpty()) {
                 died = punch(team2, iAttackerTeam2, team1);
                 if ((died & 1) == 1) {
                     iAttackerTeam2++;
@@ -155,11 +155,11 @@ public abstract class Arena implements IArena {
             }
         }
 
-        if (team1.isAlive()) {
+        if (team1.isEmpty()) {
             view.loadToOutputWinner(team1);
             return team1;
         }
-        else if (team2.isAlive()) {
+        else if (team2.isEmpty()) {
             view.loadToOutputWinner(team2);
             return team2;
         }

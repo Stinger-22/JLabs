@@ -13,11 +13,17 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Class which handles game process, user input, menu
+ */
 public class Game {
     private final List<CommonDroid> droids;
     private final List<IArena> arenas;
-    Scanner scanner;
+    private final Scanner scanner;
 
+    /**
+     * Constructor to create new game
+     */
     public Game() {
         this.droids = new ArrayList<>();
         initStandardDroids();
@@ -28,12 +34,20 @@ public class Game {
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Method which starts game
+     */
     public void start() {
         while (doMenu() == 1) {
 
         }
     }
 
+    /**
+     * Menu handling
+     * @return 1 - Game is in process; 0 - Game ended
+     * @throws InputMismatchException invalid input of user
+     */
     private int doMenu() throws InputMismatchException {
         printMenu();
         int choose;
@@ -83,6 +97,10 @@ public class Game {
         }
     }
 
+    /**
+     * Read file containing saved battle
+     * @throws FileNotFoundException file was not found with given path
+     */
     private void readFile() throws FileNotFoundException {
         String path;
         System.out.print("Path: ");
@@ -93,6 +111,9 @@ public class Game {
         }
     }
 
+    /**
+     * Setup fighters for duel
+     */
     private void setupDuel() {
         try {
             System.out.print("Choose two droids by number in list of droids\nChoose first droid: ");
@@ -107,6 +128,9 @@ public class Game {
         }
     }
 
+    /**
+     * Setup fighter for team battle
+     */
     private void setupTeamBattle() {
         System.out.println("Choose droids by number in list of droids. Enter -1 to end input.");
         int random = randomNumber(0, arenas.size());
@@ -121,6 +145,9 @@ public class Game {
         System.out.println("WINNER: " + arenas.get(random).fight());
     }
 
+    /**
+     * Print menu of game in console
+     */
     private void printMenu() {
         System.out.println("\t\t\t----MENU----");
         System.out.println("1. Create droid");
@@ -133,6 +160,9 @@ public class Game {
         System.out.print("\tUSER: ");
     }
 
+    /**
+     * Create standard droids
+     */
     private void initStandardDroids() {
         droids.add(new CommonDroid("K9-0tron", 100, 7, 11, 0));
 
@@ -149,16 +179,27 @@ public class Game {
 //        droids.get(droids.size() - 1).setEffect(new RepairTeam(4));
     }
 
+    /**
+     * Initialize arenas
+     */
     private void initStandardArenas() {
         arenas.add(new ArenaClassic());
         arenas.add(new ArenaVolcano(-3));
     }
 
+    /**
+     * Choose droid from list on user input
+     * @return chosen droid
+     */
     private CommonDroid chooseDroid() {
         int i = scanner.nextInt();
         return droids.get(i - 1);
     }
 
+    /**
+     * Choose droids to create team
+     * @return team from chosen droids
+     */
     private DroidTeam chooseDroidTeam() {
         DroidTeam team = new DroidTeam();
         int choose;
@@ -177,6 +218,11 @@ public class Game {
         return team;
     }
 
+    /**
+     * Create droid with custom characteristics
+     * @param choose droid type
+     * @return created droid
+     */
     private CommonDroid CreateCustomDroidConsole(int choose) {
         try {
             String name;
@@ -216,6 +262,9 @@ public class Game {
         }
     }
 
+    /**
+     * Menu of custom droid creation from possible type
+     */
     private void chooseDroidMenu() {
         System.out.println("\t\t\t----DROID CREATION----");
         System.out.println("1. Common droid");
@@ -224,6 +273,9 @@ public class Game {
         System.out.print("\tPlayer: ");
     }
 
+    /**
+     * Print list of created droids in console
+     */
     public void printDroidList() {
         for (int i = 0; i < droids.size(); i++) {
             System.out.println((i + 1) + ": " + droids.get(i));

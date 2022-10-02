@@ -1,26 +1,45 @@
 package com.labs.three.droid;
 
+/**
+ * Droid with energy shield which defends him from incoming damage
+ */
 public class DroidEnergyShield extends CommonDroid {
     private int energyShield;
 
+    /**
+     * Constructor for droid with energy shield
+     * @param name name of droid
+     * @param healthMax max health of droid
+     * @param damageMin min damage of droid
+     * @param damageMax max damage of droid
+     * @param armor armor of droid
+     * @param energyShield amount of energy shield
+     */
     public DroidEnergyShield(String name, int healthMax, int damageMin, int damageMax, int armor, int energyShield) {
         super(name, healthMax, damageMin, damageMax, armor);
         this.energyShield = energyShield;
     }
 
-    public DroidEnergyShield(DroidEnergyShield droid) {
-        super(droid.getName(), droid.getHealthMax(), droid.getDamageMin(), droid.getDamageMax(), droid.getArmor());
-        this.energyShield = droid.getEnergyShield();
-    }
-
+    /**
+     * Get current amount of energy shield
+     * @return amount of energy shield
+     */
     public int getEnergyShield() {
         return energyShield;
     }
 
+    /**
+     * Set new amount of energy shield
+     * @param energyShield new amount of energy shield
+     */
     public void setEnergyShield(int energyShield) {
         this.energyShield = energyShield;
     }
 
+    /**
+     * This method creates new instance of DroidEnergyShield with the same characteristics
+     * @return DroidEnergyShield with the same characteristics
+     */
     public DroidEnergyShield copy() {
         DroidEnergyShield droid = new DroidEnergyShield(name, healthMax, damageMin, damageMax, armor, energyShield);
         droid.setEffect(this.getEffect());
