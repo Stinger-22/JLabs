@@ -5,7 +5,6 @@ import static com.labs.three.util.Math.randomNumber;
 import com.labs.three.arena.*;
 import com.labs.three.droid.*;
 import com.labs.three.effect.DischargeEnergyShield;
-import com.labs.three.effect.RepairTeam;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -59,10 +58,7 @@ public class Game {
                     setupTeamBattle();
                     break;
                 case 5:
-                    String path;
-                    System.out.print("Path to file: ");
-                    path = scanner.next();
-                    Arena.saveLastFight(path);
+                    Arena.saveLastFight();
                     break;
                 case 6:
                     readFile();
