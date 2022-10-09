@@ -64,6 +64,4 @@ public class TwoMain {
                 throw new IllegalArgumentException("Invalid input choose.");
         }
     }
-
-
 }
