@@ -1,16 +1,25 @@
 package com.labs.complex.command;
 
-import com.labs.complex.account.IAccount;
+import com.labs.complex.Application;
+import com.labs.complex.db.DBConnection;
+
+import java.sql.SQLException;
 
 public class CommandExit implements Command {
-    IAccount account;
+    Application application;
 
-    public CommandExit(IAccount account) {
-        this.account = account;
+    public CommandExit(Application application) {
+        this.application = application;
     }
 
     @Override
     public void execute() {
-        System.out.println("Exit");
+        try {
+            DBConnection.getInstance().close();
+            application.setAccount(null);
+        }
+        catch (SQLException exception) {
+            System.out.println("Can't close program");
+        }
     }
 }
