@@ -2,11 +2,9 @@ package com.labs.complex.command;
 
 import com.labs.complex.Application;
 import com.labs.complex.account.Admin;
-import com.labs.complex.account.IAccount;
 import com.labs.complex.account.User;
 import com.labs.complex.account.Worker;
 import com.labs.complex.db.DBConnection;
-import com.labs.complex.menu.ConsoleMenu;
 import com.labs.complex.util.ConsoleInput;
 
 import java.sql.ResultSet;
@@ -32,8 +30,6 @@ public class CommandLogin implements Command {
         String queryAdmin = "SELECT * FROM [dbo].[Admin] WHERE [Login] = '" + login + "' AND [Password] = '" + password + "'";
         String queryWorker = "SELECT * FROM [dbo].[SystemWorker] WHERE [Login] = '" + login + "' AND [Password] = '" + password + "'";
         String queryUser = "SELECT * FROM [Person].[Person] WHERE [Login] = '" + login + "' AND [Password] = '" + password + "'";
-
-        System.out.println(queryAdmin);
 
         Statement statement;
         ResultSet resultSet;
@@ -61,7 +57,6 @@ public class CommandLogin implements Command {
                         resultSet.getString(11), resultSet.getString(14)));
             }
         }
-
         catch (SQLException exception) {
             System.out.println("Error");
             exception.printStackTrace();

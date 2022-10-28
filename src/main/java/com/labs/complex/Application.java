@@ -2,7 +2,15 @@ package com.labs.complex;
 
 import com.labs.complex.account.*;
 import com.labs.complex.command.*;
+import com.labs.complex.command.admin.CommandAddUser;
+import com.labs.complex.command.admin.CommandDeleteUser;
+import com.labs.complex.command.admin.CommandShowUser;
 import com.labs.complex.command.exception.AccessDeniedException;
+import com.labs.complex.command.user.*;
+import com.labs.complex.command.worker.CommandAddUserBenefit;
+import com.labs.complex.command.worker.CommandAddUserTax;
+import com.labs.complex.command.worker.CommandRemoveUserBenefit;
+import com.labs.complex.command.worker.CommandRemoveUserTax;
 import com.labs.complex.db.DBConnection;
 import com.labs.complex.menu.ConsoleMenu;
 import com.labs.complex.menu.Menu;
@@ -13,34 +21,22 @@ import java.util.Scanner;
 public class Application {
     private final DBConnection dbConnection = DBConnection.getInstance();
     private IAccount account;
+    private Menu menu;
 
     public Application() {
     }
 
-    public void start() throws AccessDeniedException {
-        Menu menu = new ConsoleMenu();
-        int choose = 1;
+    public void start() {
+        menu = new ConsoleMenu();
         Scanner scanner = ConsoleInput.getScanner();
-        while (choose != 0) {
+        int choose = 1;
+        do {
+            menu.show(account);
             choose = scanner.nextInt();
-            switch (choose) {
-                case 1:
-                    menu.selectCommand(new CommandLogin(this));
-                    break;
-                case 0:
-                    menu.selectCommand(new CommandExit(this));
-                    break;
-                case 3:
-                    menu.selectCommand(new CommandSearchAccount(account));
-                    break;
-                default:
-                    System.out.println("Wrong command");
-                    break;
-            }
-        }
+        } while (select(account, choose));
     }
 
-    public static void main(String[] args) throws AccessDeniedException {
+    public static void main(String[] args) {
         Application application = new Application();
         application.start();
     }
@@ -51,5 +47,109 @@ public class Application {
 
     public void setAccount(IAccount account) {
         this.account = account;
+    }
+
+    public boolean select(IAccount account, int choose) {
+        try {
+
+            if (account instanceof Admin) {
+                specificSelect((Admin) account, choose);
+            }
+            else if (account instanceof Worker) {
+                specificSelect((Worker) account, choose);
+            }
+            else if (account instanceof User) {
+                specificSelect((User) account, choose);
+            }
+            else {
+                switch (choose) {
+                    case 1:
+                        menu.selectCommand(new CommandLogin(this));
+                        break;
+                    case 2:
+                        menu.selectCommand(new CommandExit(this));
+                        return false;
+                    default:
+                        System.out.println("Wrong command");
+                        break;
+                }
+            }
+        }
+        catch (AccessDeniedException exception) {
+            new CommandExit(this);
+        }
+        return true;
+    }
+
+    private void specificSelect(Admin account, int choose) throws AccessDeniedException {
+        switch (choose) {
+            case 1:
+                menu.selectCommand(new CommandAddUser(account));
+                break;
+            case 2:
+                menu.selectCommand(new CommandDeleteUser(account));
+                break;
+            case 3:
+                menu.selectCommand(new CommandSearchUser(account));
+                break;
+            case 4:
+                menu.selectCommand(new CommandShowUser(account));
+                break;
+            case 5:
+                menu.selectCommand(new CommandLogout(this));
+                break;
+            default:
+                System.out.println("Wrong command");
+                break;
+        }
+    }
+
+    private void specificSelect(Worker account, int choose) throws AccessDeniedException {
+        switch (choose) {
+            case 1:
+                menu.selectCommand(new CommandAddUserTax(account));
+                break;
+            case 2:
+                menu.selectCommand(new CommandRemoveUserTax(account));
+                break;
+            case 3:
+                menu.selectCommand(new CommandAddUserBenefit(account));
+                break;
+            case 4:
+                menu.selectCommand(new CommandRemoveUserBenefit(account));
+                break;
+            case 5:
+                menu.selectCommand(new CommandLogout(this));
+                break;
+            default:
+                System.out.println("Wrong command");
+                break;
+        }
+    }
+
+    private void specificSelect(User account, int choose) throws AccessDeniedException {
+        switch (choose) {
+            case 1:
+                menu.selectCommand(new CommandShowTax(account));
+                break;
+            case 2:
+                menu.selectCommand(new CommandShowBenefit(account));
+                break;
+            case 3:
+                menu.selectCommand(new CommandSearchTax(account));
+                break;
+            case 4:
+                menu.selectCommand(new CommandSortTax(account));
+                break;
+            case 5:
+                menu.selectCommand(new CommandCalculateTax(account));
+                break;
+            case 6:
+                menu.selectCommand(new CommandLogout(this));
+                break;
+            default:
+                System.out.println("Wrong command");
+                break;
+        }
     }
 }

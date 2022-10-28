@@ -1,13 +1,14 @@
-package com.labs.complex.command;
+package com.labs.complex.command.admin;
 
 import com.labs.complex.account.Admin;
 import com.labs.complex.account.IAccount;
+import com.labs.complex.command.Command;
 import com.labs.complex.command.exception.AccessDeniedException;
 
-public class CommandAddUser implements Command {
+public class CommandDeleteUser implements Command {
     Admin account;
 
-    public CommandAddUser(IAccount account) throws AccessDeniedException {
+    public CommandDeleteUser(IAccount account) throws AccessDeniedException {
         if (!(account instanceof Admin)) {
             throw new AccessDeniedException(account);
         }
@@ -16,6 +17,6 @@ public class CommandAddUser implements Command {
 
     @Override
     public void execute() {
-        System.out.println("Adding user...");
+        System.out.println("Deleting user...");
     }
 }
