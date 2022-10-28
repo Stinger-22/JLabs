@@ -29,7 +29,7 @@ public class Application {
     public void start() {
         menu = new ConsoleMenu();
         Scanner scanner = ConsoleInput.getScanner();
-        int choose = 1;
+        int choose;
         do {
             menu.show(account);
             choose = scanner.nextInt();
@@ -51,7 +51,6 @@ public class Application {
 
     public boolean select(IAccount account, int choose) {
         try {
-
             if (account instanceof Admin) {
                 specificSelect((Admin) account, choose);
             }
