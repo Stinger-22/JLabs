@@ -1,34 +1,29 @@
 package com.labs.complex.account;
 
+import com.labs.complex.being.Person;
+
 public class User implements IAccount {
     private String login;
-    private String name;
-    private String surname;
-    private double salary;
-    private int kids;
-    private String mainWork;
-    private String additionalWork;
+    private Person person;
 
-    public User(String login, String name, String surname, double salary, int kids, String mainWork, String additionalWork) {
+    public User(String login, Person person) {
         this.login = login;
-        this.name = name;
-        this.surname = surname;
-        this.salary = salary;
-        this.kids = kids;
-        this.mainWork = mainWork;
-        this.additionalWork = additionalWork;
+        this.person = person;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public Person getPerson() {
+        return person;
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "login='" + login + '\'' +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", salary=" + salary +
-                ", kids=" + kids +
-                ", mainWork='" + mainWork + '\'' +
-                ", additionalWork='" + additionalWork + '\'' +
+                ", person=" + person +
                 '}';
     }
 }

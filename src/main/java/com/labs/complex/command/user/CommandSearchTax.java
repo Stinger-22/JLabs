@@ -6,7 +6,7 @@ import com.labs.complex.command.Command;
 import com.labs.complex.command.exception.AccessDeniedException;
 
 public class CommandSearchTax implements Command {
-    User account;
+    private User account;
 
     public CommandSearchTax(IAccount account) throws AccessDeniedException {
         if (!(account instanceof User)) {

@@ -5,7 +5,7 @@ import com.labs.complex.account.IAccount;
 import com.labs.complex.command.exception.AccessDeniedException;
 
 public class CommandSearchUser implements Command {
-    Admin account;
+    private Admin account;
 
     public CommandSearchUser(IAccount account) throws AccessDeniedException {
         if (!(account instanceof Admin)) {

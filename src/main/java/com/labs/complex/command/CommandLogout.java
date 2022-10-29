@@ -3,7 +3,7 @@ package com.labs.complex.command;
 import com.labs.complex.Application;
 
 public class CommandLogout implements Command {
-    Application application;
+    private Application application;
 
     public CommandLogout(Application application) {
         this.application = application;

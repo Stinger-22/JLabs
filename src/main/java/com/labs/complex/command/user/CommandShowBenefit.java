@@ -6,7 +6,7 @@ import com.labs.complex.command.Command;
 import com.labs.complex.command.exception.AccessDeniedException;
 
 public class CommandShowBenefit implements Command {
-    User account;
+    private User account;
 
     public CommandShowBenefit(IAccount account) throws AccessDeniedException {
         if (!(account instanceof User)) {

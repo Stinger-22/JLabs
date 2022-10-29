@@ -6,7 +6,7 @@ import com.labs.complex.db.DBConnection;
 import java.sql.SQLException;
 
 public class CommandExit implements Command {
-    Application application;
+    private Application application;
 
     public CommandExit(Application application) {
         this.application = application;

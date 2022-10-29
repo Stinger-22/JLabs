@@ -1,6 +1,7 @@
 package com.labs.complex;
 
 import com.labs.complex.account.*;
+import com.labs.complex.being.Person;
 import com.labs.complex.command.*;
 import com.labs.complex.command.admin.CommandAddUser;
 import com.labs.complex.command.admin.CommandDeleteUser;
@@ -24,6 +25,7 @@ public class Application {
     private Menu menu;
 
     public Application() {
+
     }
 
     public void start() {
@@ -83,7 +85,12 @@ public class Application {
     private void specificSelect(Admin account, int choose) throws AccessDeniedException {
         switch (choose) {
             case 1:
-                menu.selectCommand(new CommandAddUser(account));
+                System.out.print("Login: ");
+                String login = ConsoleInput.getScanner().next();
+                System.out.print("Password: ");
+                String password = ConsoleInput.getScanner().next();
+
+                menu.selectCommand(new CommandAddUser(account, login, password, consoleCreatePerson()));
                 break;
             case 2:
                 menu.selectCommand(new CommandDeleteUser(account));
@@ -150,5 +157,30 @@ public class Application {
                 System.out.println("Wrong command");
                 break;
         }
+    }
+
+    private Person consoleCreatePerson() {
+        Scanner scanner = ConsoleInput.getScanner();
+
+        System.out.print("Name: ");
+        String name = scanner.next();
+        System.out.print("Surame: ");
+        String surname = scanner.next();
+        System.out.print("Salary: ");
+        double salary = scanner.nextDouble();
+        System.out.print("Number of kids: ");
+        int kids = scanner.nextInt();
+        System.out.print("Main work name: ");
+        scanner.nextLine();
+        String mainWork = scanner.nextLine();
+        if (mainWork.length() == 0) {
+            mainWork = null;
+        }
+        System.out.print("Additional work name: ");
+        String additionalWork = scanner.nextLine();
+        if (additionalWork.length() == 0) {
+            additionalWork = null;
+        }
+        return new Person(name, surname, salary, kids, mainWork, additionalWork);
     }
 }

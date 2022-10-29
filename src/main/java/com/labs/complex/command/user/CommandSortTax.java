@@ -6,7 +6,7 @@ import com.labs.complex.command.Command;
 import com.labs.complex.command.exception.AccessDeniedException;
 
 public class CommandSortTax implements Command {
-    User account;
+    private User account;
 
     public CommandSortTax(IAccount account) throws AccessDeniedException {
         if (!(account instanceof User)) {

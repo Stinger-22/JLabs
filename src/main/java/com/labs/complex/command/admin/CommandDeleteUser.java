@@ -6,7 +6,7 @@ import com.labs.complex.command.Command;
 import com.labs.complex.command.exception.AccessDeniedException;
 
 public class CommandDeleteUser implements Command {
-    Admin account;
+    private Admin account;
 
     public CommandDeleteUser(IAccount account) throws AccessDeniedException {
         if (!(account instanceof Admin)) {

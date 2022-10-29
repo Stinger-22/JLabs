@@ -4,6 +4,7 @@ import com.labs.complex.Application;
 import com.labs.complex.account.Admin;
 import com.labs.complex.account.User;
 import com.labs.complex.account.Worker;
+import com.labs.complex.being.Person;
 import com.labs.complex.db.DBConnection;
 import com.labs.complex.util.ConsoleInput;
 
@@ -13,7 +14,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class CommandLogin implements Command {
-    Application application;
+    private Application application;
 
     public CommandLogin(Application application) {
         this.application = application;
@@ -83,9 +84,12 @@ public class CommandLogin implements Command {
                     statement.setInt(1, accountID);
                     resultSet = statement.executeQuery();
                     if (resultSet.next()) {
-                        application.setAccount(new User(login, resultSet.getString("Name"), resultSet.getString("Surname"),
+                        application.setAccount(
+                                new User(login,
+                                new Person(resultSet.getString("Name"), resultSet.getString("Surname"),
                                 resultSet.getInt("Salary"), resultSet.getInt("Kids"),
-                                resultSet.getString(10), resultSet.getString(13)));
+                                resultSet.getString(10), resultSet.getString(13)))
+                        );
                     }
                     else {
                         System.out.println("Can't login");
