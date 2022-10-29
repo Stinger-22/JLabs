@@ -6,6 +6,8 @@ import com.labs.complex.command.*;
 import com.labs.complex.command.admin.CommandAddUser;
 import com.labs.complex.command.admin.CommandDeleteUser;
 import com.labs.complex.command.admin.CommandShowUser;
+import com.labs.complex.command.admin.search.CommandSearchUser;
+import com.labs.complex.command.admin.search.CommandSearchUserSalary;
 import com.labs.complex.command.exception.AccessDeniedException;
 import com.labs.complex.command.user.*;
 import com.labs.complex.command.worker.CommandAddUserBenefit;
@@ -99,7 +101,7 @@ public class Application {
                 menu.selectCommand(new CommandDeleteUser(account, login));
                 break;
             case 3:
-                menu.selectCommand(new CommandSearchUser(account));
+                chooseSearch();
                 break;
             case 4:
                 System.out.print("Login: ");
@@ -108,6 +110,39 @@ public class Application {
                 break;
             case 5:
                 menu.selectCommand(new CommandLogout(this));
+                break;
+            default:
+                System.out.println("Wrong command");
+                break;
+        }
+    }
+
+    private void chooseSearch() throws AccessDeniedException {
+        System.out.print("Search by:\n1. Login\n2. Name\n3. Surname\n4. Salary\n5. Work\n> ");
+        int choose = ConsoleInput.getScanner().nextInt();
+        switch (choose) {
+            case 1:
+                System.out.print("Login: ");
+                menu.selectCommand(new CommandSearchUser(account, choose, ConsoleInput.getScanner().next()));
+                break;
+            case 2:
+                System.out.print("Name: ");
+                menu.selectCommand(new CommandSearchUser(account, choose, ConsoleInput.getScanner().next()));
+                break;
+            case 3:
+                System.out.print("Surname: ");
+                menu.selectCommand(new CommandSearchUser(account, choose, ConsoleInput.getScanner().next()));
+                break;
+            case 4:
+                System.out.print("Min salary: ");
+                double min = ConsoleInput.getScanner().nextDouble();
+                System.out.print("Min salary: ");
+                double max = ConsoleInput.getScanner().nextDouble();
+                menu.selectCommand(new CommandSearchUserSalary(account, min, max));
+                break;
+            case 5:
+                System.out.print("Work: ");
+                menu.selectCommand(new CommandSearchUser(account, choose, ConsoleInput.getScanner().next()));
                 break;
             default:
                 System.out.println("Wrong command");
