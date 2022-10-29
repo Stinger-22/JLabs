@@ -19,6 +19,7 @@ import com.labs.complex.menu.ConsoleMenu;
 import com.labs.complex.menu.Menu;
 import com.labs.complex.util.ConsoleInput;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Application {
@@ -36,13 +37,14 @@ public class Application {
         int choose;
         do {
             menu.show(account);
-            choose = scanner.nextInt();
+            try {
+                choose = scanner.nextInt();
+            }
+            catch (InputMismatchException exception) {
+                scanner.nextLine();
+                choose = -1;
+            }
         } while (select(account, choose));
-    }
-
-    public static void main(String[] args) {
-        Application application = new Application();
-        application.start();
     }
 
     public IAccount getAccount() {
@@ -67,7 +69,12 @@ public class Application {
             else {
                 switch (choose) {
                     case 1:
-                        menu.selectCommand(new CommandLogin(this));
+                        Scanner scanner = ConsoleInput.getScanner();
+                        System.out.print("Login: ");
+                        String login = scanner.next();
+                        System.out.print("Password: ");
+                        String password = scanner.next();
+                        menu.selectCommand(new CommandLogin(this, login, password));
                         break;
                     case 2:
                         menu.selectCommand(new CommandExit(this));
@@ -176,21 +183,28 @@ public class Application {
     private void specificSelect(User account, int choose) throws AccessDeniedException {
         switch (choose) {
             case 1:
-                menu.selectCommand(new CommandShowTax(account));
+                menu.selectCommand(new CommandShowUserInfo(account));
                 break;
             case 2:
-                menu.selectCommand(new CommandShowBenefit(account));
+                menu.selectCommand(new CommandShowTax(account));
                 break;
             case 3:
-                menu.selectCommand(new CommandSearchTax(account));
+                menu.selectCommand(new CommandShowBenefit(account));
                 break;
             case 4:
-                menu.selectCommand(new CommandSortTax(account));
+                ConsoleInput.getScanner().nextLine();
+                System.out.print("Searching tax: ");
+                menu.selectCommand(new CommandSearchTax(account, ConsoleInput.getScanner().nextLine()));
                 break;
             case 5:
-                menu.selectCommand(new CommandCalculateTax(account));
+                menu.selectCommand(new CommandSortTax(account));
                 break;
             case 6:
+                CommandCalculateTax commandCalculateTax = new CommandCalculateTax(account);
+                menu.selectCommand(commandCalculateTax);
+                System.out.println("Month tax: " + commandCalculateTax.getValue());
+                break;
+            case 7:
                 menu.selectCommand(new CommandLogout(this));
                 break;
             default:

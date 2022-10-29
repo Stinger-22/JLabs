@@ -17,6 +17,6 @@ public class CommandShowTax implements Command {
 
     @Override
     public void execute() {
-        System.out.println("Showing tax...");
+        System.out.println(account.getTaxList());
     }
 }

@@ -5,6 +5,8 @@ import com.labs.complex.account.User;
 import com.labs.complex.command.Command;
 import com.labs.complex.command.exception.AccessDeniedException;
 
+import java.util.Collections;
+
 public class CommandSortTax implements Command {
     private User account;
 
@@ -17,6 +19,6 @@ public class CommandSortTax implements Command {
 
     @Override
     public void execute() {
-        System.out.println("Sort tax...");
+        Collections.sort(account.getTaxList());
     }
 }

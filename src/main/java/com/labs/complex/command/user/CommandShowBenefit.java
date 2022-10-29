@@ -17,6 +17,6 @@ public class CommandShowBenefit implements Command {
 
     @Override
     public void execute() {
-        System.out.println("Showing benefit...");
+        System.out.println(account.getBenefitList());
     }
 }

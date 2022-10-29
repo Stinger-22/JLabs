@@ -53,12 +53,13 @@ public class ConsoleMenu implements Menu {
 
     private void specificShow(User account) {
         System.out.println("\t---MENU---");
-        System.out.println("1. Show taxes");
-        System.out.println("2. Show benefits");
-        System.out.println("3. Search taxes");
-        System.out.println("4. Sort taxes");
-        System.out.println("5. Calculate tax value");
-        System.out.println("6. Log out");
+        System.out.println("1. My information");
+        System.out.println("2. Show taxes");
+        System.out.println("3. Show benefits");
+        System.out.println("4. Search taxes");
+        System.out.println("5. Sort taxes");
+        System.out.println("6. Calculate tax value");
+        System.out.println("7. Log out");
         System.out.print("> ");
     }
 }

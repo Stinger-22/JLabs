@@ -4,30 +4,31 @@ import com.labs.complex.Application;
 import com.labs.complex.account.Admin;
 import com.labs.complex.account.User;
 import com.labs.complex.account.Worker;
+import com.labs.complex.being.Action;
+import com.labs.complex.being.Benefit;
 import com.labs.complex.being.Person;
+import com.labs.complex.being.Tax;
 import com.labs.complex.db.DBConnection;
-import com.labs.complex.util.ConsoleInput;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CommandLogin implements Command {
     private Application application;
+    private String login;
+    private String password;
 
-    public CommandLogin(Application application) {
+    public CommandLogin(Application application, String login, String password) {
         this.application = application;
+        this.login = login;
+        this.password = password;
     }
 
     @Override
     public void execute() {
-        Scanner scanner = ConsoleInput.getScanner();
-        System.out.print("Login: ");
-        String login = scanner.next();
-        System.out.print("Password: ");
-        String password = scanner.next();
-
         PreparedStatement statement;
         ResultSet resultSet;
 
@@ -76,26 +77,7 @@ public class CommandLogin implements Command {
                     statement.close();
                     break;
                 case 'P':
-                    String queryUser = "SELECT * FROM [Person].[Person] AS Person " +
-                            "LEFT JOIN [Work].[Work] AS MainWork ON Person.[MainWorkID] = MainWork.[WorkID] " +
-                            "LEFT JOIN [Work].[Work] AS AddWork ON Person.[AdditionalWorkID] = AddWork.[WorkID] " +
-                            "WHERE [AccountID] = ?";
-                    statement = DBConnection.getInstance().prepareStatement(queryUser);
-                    statement.setInt(1, accountID);
-                    resultSet = statement.executeQuery();
-                    if (resultSet.next()) {
-                        application.setAccount(
-                                new User(login,
-                                new Person(resultSet.getString("Name"), resultSet.getString("Surname"),
-                                resultSet.getInt("Salary"), resultSet.getInt("Kids"),
-                                resultSet.getString(10), resultSet.getString(13)))
-                        );
-                    }
-                    else {
-                        System.out.println("Can't login");
-                        //TODO SEND MESSAGE TO MAIL
-                    }
-                    statement.close();
+                    setupUser(accountID);
                     break;
                 default:
                     System.out.println("Can't login");
@@ -106,5 +88,86 @@ public class CommandLogin implements Command {
         catch (SQLException exception) {
             exception.printStackTrace();
         }
+    }
+
+    private void setupUser(int accountID) throws SQLException {
+        PreparedStatement statement;
+        ResultSet r;
+        Person person;
+        List<Tax> taxList = new ArrayList<>();
+        List<Benefit> benefitList = new ArrayList<>();
+        List<Action> actionList = new ArrayList<>();
+        // Person
+        int personID;
+        String queryPerson = "SELECT * FROM [Person].[Person] AS Person " +
+                "LEFT JOIN [Work].[Work] AS MainWork ON Person.[MainWorkID] = MainWork.[WorkID] " +
+                "LEFT JOIN [Work].[Work] AS AddWork ON Person.[AdditionalWorkID] = AddWork.[WorkID] " +
+                "WHERE [AccountID] = ?";
+        statement = DBConnection.getInstance().prepareStatement(queryPerson);
+        statement.setInt(1, accountID);
+        r = statement.executeQuery();
+        if (r.next()) {
+            person = new Person(r.getString("Name"), r.getString("Surname"),
+                    r.getInt("Salary"), r.getInt("Kids"),
+                    r.getString(10), r.getString(13));
+            personID = r.getInt("PersonID");
+        }
+        else {
+            System.out.println("Can't login");
+            return;
+            //TODO SEND MESSAGE TO MAIL
+        }
+        statement.close();
+        // List tax
+        String queryTax = "SELECT Tax.[Description], PersonTax.[Value], Tax.[isAbsolute] " +
+                "FROM [Person].[PersonTax] PersonTax " +
+                "INNER JOIN [Tax].[Tax] Tax ON Tax.[TaxID] = PersonTax.[TaxID] " +
+                "WHERE [PersonID] = ?";
+        statement = DBConnection.getInstance().prepareStatement(queryTax);
+        statement.setInt(1, personID);
+
+        r = statement.executeQuery();
+        while (r.next()) {
+            taxList.add(new Tax(r.getString(1), r.getInt(2), (r.getByte(3) == 1)));
+        }
+        if (taxList.isEmpty()) {
+            taxList = null;
+        }
+
+        statement.close();
+        // List benefit
+        String queryBenefit = "SELECT Benefit.[Description] FROM [Person].[PersonBenefit] PersonBenefit " +
+                "INNER JOIN [Benefit].[Benefit] Benefit ON Benefit.[BenefitID] = PersonBenefit.[BenefitID] " +
+                "WHERE [PersonID] = ?";
+        statement = DBConnection.getInstance().prepareStatement(queryBenefit);
+        statement.setInt(1, personID);
+
+        r = statement.executeQuery();
+        while (r.next()) {
+            benefitList.add(new Benefit(r.getString(1)));
+        }
+        if (benefitList.isEmpty()) {
+            benefitList = null;
+        }
+
+        statement.close();
+        // List action
+        String queryAction = "SELECT [Name], [Value], [Date] FROM [Person].[PersonAction] [PersonAction] " +
+                "INNER JOIN [Action].[Action] [Action] ON [Action].[ActionID] = PersonAction.[ActionID] " +
+                "WHERE [PersonID] = ?";
+        statement = DBConnection.getInstance().prepareStatement(queryAction);
+        statement.setInt(1, personID);
+
+        r = statement.executeQuery();
+        while (r.next()) {
+            actionList.add(new Action(r.getString(1), r.getInt(2), r.getDate(3)));
+        }
+        if (actionList.isEmpty()) {
+            actionList = null;
+        }
+
+        statement.close();
+
+        application.setAccount(new User(login, person, taxList, benefitList, actionList));
     }
 }
