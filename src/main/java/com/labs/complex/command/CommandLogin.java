@@ -104,7 +104,6 @@ public class CommandLogin implements Command {
             }
         }
         catch (SQLException exception) {
-            System.out.println("Error");
             exception.printStackTrace();
         }
     }

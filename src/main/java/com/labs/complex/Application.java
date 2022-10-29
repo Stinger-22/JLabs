@@ -83,23 +83,28 @@ public class Application {
     }
 
     private void specificSelect(Admin account, int choose) throws AccessDeniedException {
+        String login;
         switch (choose) {
             case 1:
                 System.out.print("Login: ");
-                String login = ConsoleInput.getScanner().next();
+                login = ConsoleInput.getScanner().next();
                 System.out.print("Password: ");
                 String password = ConsoleInput.getScanner().next();
 
                 menu.selectCommand(new CommandAddUser(account, login, password, consoleCreatePerson()));
                 break;
             case 2:
-                menu.selectCommand(new CommandDeleteUser(account));
+                System.out.print("Login: ");
+                login = ConsoleInput.getScanner().next();
+                menu.selectCommand(new CommandDeleteUser(account, login));
                 break;
             case 3:
                 menu.selectCommand(new CommandSearchUser(account));
                 break;
             case 4:
-                menu.selectCommand(new CommandShowUser(account));
+                System.out.print("Login: ");
+                login = ConsoleInput.getScanner().next();
+                menu.selectCommand(new CommandShowUser(account, login));
                 break;
             case 5:
                 menu.selectCommand(new CommandLogout(this));
