@@ -19,7 +19,7 @@ public class CommandExit implements Command {
             application.setAccount(null);
         }
         catch (SQLException exception) {
-            System.out.println("Can't close program");
+            exception.printStackTrace();
         }
     }
 }

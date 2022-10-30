@@ -1,5 +1,7 @@
 package com.labs.complex.account;
 
+import java.util.Objects;
+
 public class Worker implements IAccount {
     private String login;
     private String name;
@@ -21,6 +23,14 @@ public class Worker implements IAccount {
 
     public String getSurname() {
         return surname;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Worker worker = (Worker) o;
+        return Objects.equals(login, worker.login) && Objects.equals(name, worker.name) && Objects.equals(surname, worker.surname);
     }
 
     @Override

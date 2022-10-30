@@ -6,6 +6,7 @@ import com.labs.complex.being.Person;
 import com.labs.complex.being.Tax;
 
 import java.util.List;
+import java.util.Objects;
 
 public class User implements IAccount {
     private String login;
@@ -40,6 +41,14 @@ public class User implements IAccount {
 
     public List<Action> getActionList() {
         return actionList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(login, user.login) && Objects.equals(person, user.person) && Objects.equals(taxList, user.taxList) && Objects.equals(benefitList, user.benefitList) && Objects.equals(actionList, user.actionList);
     }
 
     @Override

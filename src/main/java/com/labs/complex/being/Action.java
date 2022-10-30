@@ -5,10 +5,10 @@ import java.util.Objects;
 
 public class Action {
     private String name;
-    private double value;
+    private int value;
     private Date date;
 
-    public Action(String name, double value, Date date) {
+    public Action(String name, int value, Date date) {
         this.name = name;
         this.value = value;
         this.date = date;
@@ -18,7 +18,7 @@ public class Action {
         return name;
     }
 
-    public double getValue() {
+    public int getValue() {
         return value;
     }
 
@@ -31,7 +31,7 @@ public class Action {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Action action = (Action) o;
-        return Double.compare(action.value, value) == 0 && Objects.equals(name, action.name) && Objects.equals(date, action.date);
+        return value == action.value && Objects.equals(name, action.name) && Objects.equals(date, action.date);
     }
 
     @Override

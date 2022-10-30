@@ -40,13 +40,12 @@ public class DBConnection {
 
     @Override
     public String toString() {
-        return "DBConnection{" +
-                "connection=" + connection +
-                '}';
+        return "DBConnection{connection=" + connection + '}';
     }
 
     public void close() throws SQLException {
         connection.close();
+        dbConnection = null;
     }
 
     public Statement createStatement() {
@@ -54,7 +53,7 @@ public class DBConnection {
             return connection.createStatement();
         }
         catch (SQLException exception) {
-            System.out.println("Can't create SQL statement");
+            exception.printStackTrace();
         }
         return null;
     }
@@ -64,7 +63,7 @@ public class DBConnection {
             return connection.prepareStatement(query);
         }
         catch (SQLException exception) {
-            System.out.println("Can't create SQL statement");
+            exception.printStackTrace();
         }
         return null;
     }

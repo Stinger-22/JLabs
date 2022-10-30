@@ -5,6 +5,7 @@ import com.labs.complex.account.Admin;
 import com.labs.complex.account.User;
 import com.labs.complex.account.Worker;
 import com.labs.complex.being.*;
+import com.labs.complex.command.exception.NoRightException;
 import com.labs.complex.db.DBConnection;
 
 import java.sql.PreparedStatement;
@@ -54,7 +55,7 @@ public class CommandLogin implements Command {
                         application.setAccount(new Admin(login));
                     }
                     else {
-                        System.out.println("Can't login");
+                        throw new NoRightException(login, role);
                         //TODO SEND MESSAGE TO MAIL
                     }
                     statement.close();
@@ -68,7 +69,7 @@ public class CommandLogin implements Command {
                         application.setAccount(new Worker(login, resultSet.getString("Name"), resultSet.getString("Surname")));
                     }
                     else {
-                        System.out.println("Can't login");
+                        throw new NoRightException(login, role);
                         //TODO SEND MESSAGE TO MAIL
                     }
                     statement.close();
@@ -77,9 +78,8 @@ public class CommandLogin implements Command {
                     setupUser(accountID);
                     break;
                 default:
-                    System.out.println("Can't login");
+                    throw new NoRightException(login, role);
                     //TODO SEND MESSAGE TO MAIL
-                    break;
             }
         }
         catch (SQLException exception) {
@@ -87,7 +87,7 @@ public class CommandLogin implements Command {
         }
     }
 
-    private void setupUser(int accountID) throws SQLException {
+    private void setupUser(int accountID) throws SQLException, NoRightException {
         PreparedStatement statement;
         ResultSet r;
         Person person;
@@ -110,9 +110,8 @@ public class CommandLogin implements Command {
             personID = r.getInt("PersonID");
         }
         else {
-            System.out.println("Can't login");
-            return;
             //TODO SEND MESSAGE TO MAIL
+            throw new NoRightException(login, 'P');
         }
         statement.close();
         // List tax

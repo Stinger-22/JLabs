@@ -27,7 +27,7 @@ public class TestBeing {
     @Test
     public void testAction() {
         String name = "Jack";
-        double value = 45;
+        int value = 45;
         java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
 
         Action action = new Action(name, value, date);
