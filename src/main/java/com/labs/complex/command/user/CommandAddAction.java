@@ -3,7 +3,7 @@ package com.labs.complex.command.user;
 import com.labs.complex.account.IAccount;
 import com.labs.complex.account.User;
 import com.labs.complex.command.Command;
-import com.labs.complex.command.exception.AccessDeniedException;
+import com.labs.complex.exception.AccessDeniedException;
 import com.labs.complex.db.DBConnection;
 
 import java.sql.PreparedStatement;
@@ -63,7 +63,7 @@ public class CommandAddAction implements Command {
         statement = DBConnection.getInstance().prepareStatement(getAccountID);
         Integer id = null;
         try {
-            statement.setString(1, ((User) account).getLogin());
+            statement.setString(1, account.getLogin());
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 id = resultSet.getInt(1);

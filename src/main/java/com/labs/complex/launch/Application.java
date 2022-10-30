@@ -8,7 +8,7 @@ import com.labs.complex.command.admin.CommandDeleteUser;
 import com.labs.complex.command.admin.CommandShowUserPerson;
 import com.labs.complex.command.admin.search.CommandSearchUser;
 import com.labs.complex.command.admin.search.CommandSearchUserSalary;
-import com.labs.complex.command.exception.AccessDeniedException;
+import com.labs.complex.exception.AccessDeniedException;
 import com.labs.complex.command.user.*;
 import com.labs.complex.command.worker.*;
 import com.labs.complex.db.DBConnection;

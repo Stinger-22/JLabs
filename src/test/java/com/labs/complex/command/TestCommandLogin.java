@@ -8,7 +8,7 @@ import com.labs.complex.being.Action;
 import com.labs.complex.being.Benefit;
 import com.labs.complex.being.Person;
 import com.labs.complex.being.Tax;
-import com.labs.complex.command.exception.NoRightException;
+import com.labs.complex.exception.NoRightException;
 import org.junit.*;
 
 import java.text.DateFormat;

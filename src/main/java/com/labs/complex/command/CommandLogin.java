@@ -5,7 +5,7 @@ import com.labs.complex.account.Admin;
 import com.labs.complex.account.User;
 import com.labs.complex.account.Worker;
 import com.labs.complex.being.*;
-import com.labs.complex.command.exception.NoRightException;
+import com.labs.complex.exception.NoRightException;
 import com.labs.complex.db.DBConnection;
 
 import java.sql.PreparedStatement;

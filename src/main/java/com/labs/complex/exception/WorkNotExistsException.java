@@ -1,4 +1,4 @@
-package com.labs.complex.command.exception;
+package com.labs.complex.exception;
 
 public class WorkNotExistsException extends Exception {
     private String work;

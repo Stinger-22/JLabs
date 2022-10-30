@@ -3,7 +3,7 @@ package com.labs.complex.command.worker;
 import com.labs.complex.account.IAccount;
 import com.labs.complex.account.Worker;
 import com.labs.complex.command.Command;
-import com.labs.complex.command.exception.AccessDeniedException;
+import com.labs.complex.exception.AccessDeniedException;
 import com.labs.complex.db.DBConnection;
 
 import java.sql.ResultSet;

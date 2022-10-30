@@ -4,7 +4,7 @@ import com.labs.complex.account.IAccount;
 import com.labs.complex.account.User;
 import com.labs.complex.being.Tax;
 import com.labs.complex.command.Command;
-import com.labs.complex.command.exception.AccessDeniedException;
+import com.labs.complex.exception.AccessDeniedException;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.labs.complex.command.exception;
+package com.labs.complex.exception;
 
 import com.labs.complex.account.IAccount;
 

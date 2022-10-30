@@ -7,7 +7,7 @@ import com.labs.complex.being.Tax;
 import com.labs.complex.command.CommandExit;
 import com.labs.complex.command.CommandLogin;
 import com.labs.complex.command.CommandLogout;
-import com.labs.complex.command.exception.AccessDeniedException;
+import com.labs.complex.exception.AccessDeniedException;
 import org.junit.*;
 
 import java.util.ArrayList;
