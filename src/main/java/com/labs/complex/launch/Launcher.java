@@ -1,4 +1,4 @@
-package com.labs.complex;
+package com.labs.complex.launch;
 
 public class Launcher {
     public static void main(String[] args) {

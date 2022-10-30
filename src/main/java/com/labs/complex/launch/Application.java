@@ -1,4 +1,4 @@
-package com.labs.complex;
+package com.labs.complex.launch;
 
 import com.labs.complex.account.*;
 import com.labs.complex.being.Person;
@@ -224,7 +224,9 @@ public class Application {
             case 4:
                 ConsoleInput.getScanner().nextLine();
                 System.out.print("Searching tax: ");
-                menu.selectCommand(new CommandSearchTax(account, ConsoleInput.getScanner().nextLine()));
+                CommandSearchTax commandSearchTax = new CommandSearchTax(account, ConsoleInput.getScanner().nextLine());
+                menu.selectCommand(commandSearchTax);
+                System.out.println(commandSearchTax.getTaxList());
                 break;
             case 5:
                 menu.selectCommand(new CommandSortTax(account));

@@ -1,13 +1,12 @@
 package com.labs.complex.command.admin;
 
-import com.labs.complex.Application;
-import com.labs.complex.account.Admin;
-import com.labs.complex.account.User;
+import com.labs.complex.launch.Application;
 import com.labs.complex.being.Person;
-import com.labs.complex.command.Command;
 import com.labs.complex.command.CommandExit;
 import com.labs.complex.command.CommandLogin;
 import com.labs.complex.command.CommandLogout;
+import com.labs.complex.command.admin.search.CommandSearchUser;
+import com.labs.complex.command.admin.search.CommandSearchUserSalary;
 import com.labs.complex.command.exception.AccessDeniedException;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -85,6 +84,21 @@ public class TestCommandAdmin {
         catch (AccessDeniedException exception) {
             fail("Admin have no access to CommandShowUserPerson.");
         }
+    }
+
+    @Test
+    public void testAdminCommandsSearch() throws AccessDeniedException {
+        new CommandLogin(application, "TestAdmin", "testadmin").execute();
+        System.out.println("TEST BY LOGIN FILTER");
+        new CommandSearchUser(application.getAccount(), 1, "Test").execute();
+        System.out.println("TEST BY NAME FILTER");
+        new CommandSearchUser(application.getAccount(), 2, "Test").execute();
+        System.out.println("TEST BY SURNAME FILTER");
+        new CommandSearchUser(application.getAccount(), 3, "Person").execute();
+        System.out.println("TEST BY WORK FILTER");
+        new CommandSearchUser(application.getAccount(), 4, "Test").execute();
+        System.out.println("TEST BY SALARY FILTER");
+        new CommandSearchUserSalary(application.getAccount(), 0, 10).execute();
     }
 
     @Test

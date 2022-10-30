@@ -6,9 +6,13 @@ import com.labs.complex.being.Tax;
 import com.labs.complex.command.Command;
 import com.labs.complex.command.exception.AccessDeniedException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CommandSearchTax implements Command {
     private User account;
     private String filter;
+    private List<Tax> taxList;
 
     public CommandSearchTax(IAccount account, String filter) throws AccessDeniedException {
         if (!(account instanceof User)) {
@@ -16,14 +20,19 @@ public class CommandSearchTax implements Command {
         }
         this.account = (User) account;
         this.filter = filter.toLowerCase();
+        this.taxList = new ArrayList<>();
     }
 
     @Override
     public void execute() {
         for (Tax tax : account.getTaxList()) {
             if (tax.getDescription().toLowerCase().contains(filter)) {
-                System.out.println(tax);
+                taxList.add(tax);
             }
         }
+    }
+
+    public List<Tax> getTaxList() {
+        return taxList;
     }
 }

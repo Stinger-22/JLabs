@@ -43,7 +43,7 @@ public class CommandCalculateTax implements Command {
                 resultSet = statement.executeQuery();
                 resultSet.next();
                 if (resultSet.getInt(1) == 0) {
-                    value += action.getValue() / 100 * 2;
+                    value += (float) action.getValue() / 100.0 * 2.0;
                 }
             }
             statement.close();

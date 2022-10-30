@@ -14,9 +14,5 @@ public class Utility {
                     r.getString(14), r.getString(17)
             );
         }
-        while (r.next()) {
-            System.out.println(r.getInt(1) + r.getString(2) + r.getString(3) +
-                    r.getString(7) + r.getString(8));
-        }
     }
 }

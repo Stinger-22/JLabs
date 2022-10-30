@@ -1,8 +1,7 @@
 package com.labs.complex.command;
 
-import com.labs.complex.Application;
+import com.labs.complex.launch.Application;
 import com.labs.complex.command.exception.AccessDeniedException;
-import com.labs.complex.db.DBConnection;
 import org.junit.Before;
 import org.junit.Test;
 

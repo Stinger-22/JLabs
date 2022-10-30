@@ -18,9 +18,7 @@ public class CommandFindAccountID implements Command {
 
     public CommandFindAccountID(IAccount account, String login) throws AccessDeniedException {
         if (!(account instanceof Admin || account instanceof Worker)) {
-            if (!(account instanceof User)) {
                 throw new AccessDeniedException(account);
-            }
         }
         this.account = account;
         this.login = login;
@@ -33,12 +31,7 @@ public class CommandFindAccountID implements Command {
         String getAccountID = "SELECT AccountID FROM [dbo].[Account] WHERE Login = ?";
         statement = DBConnection.getInstance().prepareStatement(getAccountID);
         try {
-            if (account instanceof User) {
-                statement.setString(1, ((User) account).getLogin());
-            }
-            else {
-                statement.setString(1, login);
-            }
+            statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 id = resultSet.getInt(1);
@@ -49,10 +42,6 @@ public class CommandFindAccountID implements Command {
         catch (SQLException exception) {
             exception.printStackTrace();
         }
-    }
-
-    private void executeForUser() {
-
     }
 
     public Integer getId() {

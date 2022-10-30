@@ -2,20 +2,19 @@ package com.labs.complex.command.user;
 
 import com.labs.complex.account.IAccount;
 import com.labs.complex.account.User;
-import com.labs.complex.account.Worker;
-import com.labs.complex.being.Action;
 import com.labs.complex.command.Command;
-import com.labs.complex.command.CommandFindAccountID;
 import com.labs.complex.command.exception.AccessDeniedException;
 import com.labs.complex.db.DBConnection;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CommandAddAction implements Command {
     private User account;
     private int actionID;
     private int value;
+    private boolean add = false;
 
     public CommandAddAction(IAccount account, int actionID, int value) throws AccessDeniedException {
         if (!(account instanceof User)) {
@@ -32,14 +31,10 @@ public class CommandAddAction implements Command {
 
         String addTax = "INSERT INTO [Person].[PersonAction] VALUES (?, ?, ?, DEFAULT)";
         statement = DBConnection.getInstance().prepareStatement(addTax);
-        int id;
+        Integer id;
         try {
-            CommandFindAccountID finder = new CommandFindAccountID(account, account.getLogin());
-            finder.execute();
-            if (finder.getId() != null) {
-                id = finder.getId();
-            }
-            else {
+            id = findPersonID();
+            if (id == null) {
                 return;
             }
             statement.setInt(1, id);
@@ -47,9 +42,42 @@ public class CommandAddAction implements Command {
             statement.setInt(3, value);
             statement.executeUpdate();
             statement.close();
+            add = true;
         }
-        catch (SQLException | AccessDeniedException exception) {
+        catch (SQLException exception) {
+            if (exception.getMessage().contains("Violation of PRIMARY KEY constraint 'PK_PersonAction'")) {
+                System.out.println("You've already added this action today.");
+            }
+            else {
+                exception.printStackTrace();
+            }
+        }
+    }
+
+    private Integer findPersonID() {
+        PreparedStatement statement;
+
+        String getAccountID = "SELECT PersonID FROM [dbo].[Account] [Account] \n" +
+                "INNER JOIN [Person].[Person] [Person] ON [Person].[AccountID] = [Account].[AccountID]\n" +
+                "WHERE [Account].[Login] = ?";
+        statement = DBConnection.getInstance().prepareStatement(getAccountID);
+        Integer id = null;
+        try {
+            statement.setString(1, ((User) account).getLogin());
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                id = resultSet.getInt(1);
+                statement.close();
+            }
+            statement.close();
+        }
+        catch (SQLException exception) {
             exception.printStackTrace();
         }
+        return id;
+    }
+
+    public boolean isAdd() {
+        return add;
     }
 }
