@@ -1,5 +1,7 @@
 package com.labs.complex.being;
 
+import java.util.Objects;
+
 public class Tax implements Comparable<Tax> {
     private String description;
     private int value;
@@ -29,11 +31,16 @@ public class Tax implements Comparable<Tax> {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tax tax = (Tax) o;
+        return value == tax.value && absolute == tax.absolute && Objects.equals(description, tax.description);
+    }
+
+    @Override
     public String toString() {
-        return "Tax{" +
-                "description='" + description + '\'' +
-                ", value=" + value +
-                ", absolute=" + absolute +
-                '}';
+        return "Tax{description='" + description + '\'' +
+                ", value=" + value + ", absolute=" + absolute + '}';
     }
 }

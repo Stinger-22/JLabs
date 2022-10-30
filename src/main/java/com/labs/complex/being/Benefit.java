@@ -1,5 +1,7 @@
 package com.labs.complex.being;
 
+import java.util.Objects;
+
 public class Benefit {
     private String description;
 
@@ -12,9 +14,15 @@ public class Benefit {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Benefit benefit = (Benefit) o;
+        return Objects.equals(description, benefit.description);
+    }
+
+    @Override
     public String toString() {
-        return "Benefit{" +
-                "description='" + description + '\'' +
-                '}';
+        return "Benefit{description='" + description + "'}";
     }
 }

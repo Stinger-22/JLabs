@@ -7,10 +7,12 @@ public class Admin implements IAccount {
         this.login = login;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
     @Override
     public String toString() {
-        return "Admin{" +
-                "login='" + login + '\'' +
-                '}';
+        return "Admin{login='" + login + "'}";
     }
 }

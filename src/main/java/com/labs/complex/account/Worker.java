@@ -11,6 +11,18 @@ public class Worker implements IAccount {
         this.surname = surname;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
     @Override
     public String toString() {
         return "Worker{" +

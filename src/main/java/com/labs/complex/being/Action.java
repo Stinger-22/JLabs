@@ -1,6 +1,7 @@
 package com.labs.complex.being;
 
 import java.sql.Date;
+import java.util.Objects;
 
 public class Action {
     private String name;
@@ -26,11 +27,15 @@ public class Action {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Action action = (Action) o;
+        return Double.compare(action.value, value) == 0 && Objects.equals(name, action.name) && Objects.equals(date, action.date);
+    }
+
+    @Override
     public String toString() {
-        return "Action{" +
-                "name='" + name + '\'' +
-                ", value=" + value +
-                ", date=" + date +
-                '}';
+        return "Action{name='" + name + "', value=" + value + ", date=" + date + '}';
     }
 }
