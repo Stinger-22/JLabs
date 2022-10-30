@@ -1,5 +1,6 @@
 package com.labs.complex.util;
 
+import java.io.InputStream;
 import java.util.Scanner;
 
 public class ConsoleInput {
@@ -14,5 +15,13 @@ public class ConsoleInput {
             scanner = new Scanner(System.in);
         }
         return scanner;
+    }
+
+    public static void setInputStream(InputStream stream) {
+        scanner = new Scanner(stream);
+    }
+
+    public static void close() {
+        scanner = null;
     }
 }

@@ -1,6 +1,6 @@
 package com.labs.complex.command;
 
-import com.labs.complex.launch.Application;
+import com.labs.complex.Application;
 
 public class CommandLogout implements Command {
     private Application application;

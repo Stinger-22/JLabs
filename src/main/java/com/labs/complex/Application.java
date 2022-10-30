@@ -1,4 +1,4 @@
-package com.labs.complex.launch;
+package com.labs.complex;
 
 import com.labs.complex.account.*;
 import com.labs.complex.being.Person;
@@ -263,7 +263,7 @@ public class Application {
 
         System.out.print("Name: ");
         String name = scanner.next();
-        System.out.print("Surame: ");
+        System.out.print("Surname: ");
         String surname = scanner.next();
         System.out.print("Salary: ");
         double salary = scanner.nextDouble();

@@ -1,6 +1,6 @@
 package com.labs.complex.command;
 
-import com.labs.complex.launch.Application;
+import com.labs.complex.Application;
 import com.labs.complex.account.Admin;
 import com.labs.complex.account.User;
 import com.labs.complex.account.Worker;
@@ -126,9 +126,6 @@ public class CommandLogin implements Command {
         while (r.next()) {
             taxList.add(new Tax(r.getString(1), r.getInt(2), (r.getByte(3) == 1)));
         }
-        if (taxList.isEmpty()) {
-            taxList = null;
-        }
 
         statement.close();
         // List benefit
@@ -142,9 +139,6 @@ public class CommandLogin implements Command {
         while (r.next()) {
             benefitList.add(new Benefit(r.getString(1)));
         }
-        if (benefitList.isEmpty()) {
-            benefitList = null;
-        }
 
         statement.close();
         // List action
@@ -157,9 +151,6 @@ public class CommandLogin implements Command {
         r = statement.executeQuery();
         while (r.next()) {
             actionList.add(new Action(r.getString(1), r.getInt(2), r.getDate(3)));
-        }
-        if (actionList.isEmpty()) {
-            actionList = null;
         }
 
         statement.close();

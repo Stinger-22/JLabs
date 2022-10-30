@@ -1,12 +1,13 @@
 package com.labs.complex.command.admin;
 
-import com.labs.complex.launch.Application;
+import com.labs.complex.Application;
 import com.labs.complex.being.Person;
 import com.labs.complex.command.CommandExit;
 import com.labs.complex.command.CommandLogin;
 import com.labs.complex.command.CommandLogout;
 import com.labs.complex.command.admin.search.CommandSearchUser;
 import com.labs.complex.command.admin.search.CommandSearchUserSalary;
+import com.labs.complex.command.user.CommandShowActions;
 import com.labs.complex.exception.AccessDeniedException;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -107,15 +108,23 @@ public class TestCommandAdmin {
         Person person1 = new Person("Test", "Person", 0.0, 0, null, null);
         try {
             new CommandAddUser(application.getAccount(), "TestAddUser1", "testadduser1", person1).execute();
-            fail("User can add user.");
-        }
-        catch (AccessDeniedException ignored) {
-        }
+            fail("User can use CommandAddUser.");
+        } catch (AccessDeniedException ignored) {}
         try {
             new CommandDeleteUser(application.getAccount(), "TestAddUser1").execute();
-            fail("User can delete user.");
-        }
-        catch (AccessDeniedException ignored) {
-        }
+            fail("User can use CommandDeleteUser.");
+        } catch (AccessDeniedException ignored) {}
+        try {
+            new CommandShowUserPerson(application.getAccount(), "TestPerson").execute();
+            fail("User can use CommandShowUserPerson.");
+        } catch (AccessDeniedException ignored) {}
+        try {
+            new CommandSearchUser(application.getAccount(), 1, "Test").execute();
+            fail("User can use CommandSearchUser.");
+        } catch (AccessDeniedException ignored) {}
+        try {
+            new CommandSearchUserSalary(application.getAccount(), 0, 10).execute();
+            fail("User can use CommandSearchUserSalary.");
+        } catch (AccessDeniedException ignored) {}
     }
 }

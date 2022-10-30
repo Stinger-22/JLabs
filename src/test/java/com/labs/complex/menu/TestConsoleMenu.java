@@ -3,7 +3,6 @@ package com.labs.complex.menu;
 import com.labs.complex.account.Admin;
 import com.labs.complex.account.User;
 import com.labs.complex.account.Worker;
-import com.labs.complex.command.CommandLogin;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +18,7 @@ public class TestConsoleMenu {
     private final PrintStream originalOut = System.out;
 
     @Before
-    public void setUpStreams() {
+    public void setupStreams() {
         System.setOut(new PrintStream(out));
     }
 

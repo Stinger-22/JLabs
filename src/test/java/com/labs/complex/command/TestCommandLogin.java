@@ -1,6 +1,6 @@
 package com.labs.complex.command;
 
-import com.labs.complex.launch.Application;
+import com.labs.complex.Application;
 import com.labs.complex.account.Admin;
 import com.labs.complex.account.User;
 import com.labs.complex.account.Worker;
@@ -87,12 +87,12 @@ public class TestCommandLogin {
         User user = new User("TestPerson", person, taxList, benefitList, actionList);
         assertEquals(user, application.getAccount());
     }
-    
+
     @Test
     public void testLoginUserNoLists() {
         new CommandLogin(application, "TestPerson3", "testperson3").execute();
         Person person = new Person("Test", "Person", 0.0, 0, null, null);
-        User user = new User("TestPerson3", person, null, null, null);
+        User user = new User("TestPerson3", person, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         assertEquals(user, application.getAccount());
     }
 }

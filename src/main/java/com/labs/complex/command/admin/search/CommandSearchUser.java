@@ -46,7 +46,7 @@ public class CommandSearchUser implements Command {
             case 3:
                 search(searchTemplate + searchBySurname);
                 break;
-            case 4:
+            case 5:
                 search(searchTemplate + searchByWork);
                 break;
             default:
@@ -59,7 +59,7 @@ public class CommandSearchUser implements Command {
         PreparedStatement statement;
         statement = DBConnection.getInstance().prepareStatement(query);
         try {
-            if (searchBy == 4) {
+            if (searchBy == 5) {
                 statement.setString(1, "%" + "" + filter +  "%");
                 statement.setString(2, "%" + "" + filter +  "%");
             }

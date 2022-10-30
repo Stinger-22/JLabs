@@ -1,7 +1,8 @@
 package com.labs.complex.command;
 
-import com.labs.complex.launch.Application;
+import com.labs.complex.Application;
 import com.labs.complex.exception.AccessDeniedException;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,6 +15,12 @@ public class TestCommandFindAccountID {
     public void setupApplication() {
         application = new Application();
         new CommandLogin(application, "TestAdmin", "testadmin").execute();
+    }
+
+    @After
+    public void closeApplication() {
+        new CommandLogout(application).execute();
+        new CommandExit(application).execute();
     }
 
     @Test

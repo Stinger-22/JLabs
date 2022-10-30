@@ -1,6 +1,6 @@
 package com.labs.complex.command.user;
 
-import com.labs.complex.launch.Application;
+import com.labs.complex.Application;
 import com.labs.complex.account.User;
 import com.labs.complex.being.Action;
 import com.labs.complex.being.Tax;
