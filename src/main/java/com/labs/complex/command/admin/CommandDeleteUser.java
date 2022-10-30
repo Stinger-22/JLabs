@@ -30,7 +30,7 @@ public class CommandDeleteUser implements Command {
             if (finder.getId() != null) {
                 deleteAccount(finder.getId());
             }
-        } catch (SQLException | AccessDeniedException exception) {
+        } catch (SQLException exception) {
             exception.printStackTrace();
         }
     }

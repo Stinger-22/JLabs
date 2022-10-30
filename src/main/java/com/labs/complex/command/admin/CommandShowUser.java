@@ -33,7 +33,7 @@ public class CommandShowUser implements Command {
                 return;
             }
             showUser(finder.getId());
-        } catch (AccessDeniedException | SQLException exception) {
+        } catch (SQLException exception) {
             exception.printStackTrace();
         }
     }

@@ -31,18 +31,12 @@ public class CommandRemoveUserBenefit implements Command {
         String deleteBenefit = "DELETE FROM [Person].[PersonBenefit] WHERE PersonID = ? AND BenefitID = ?";
         statement = DBConnection.getInstance().prepareStatement(deleteBenefit);
         int id;
-        try {
-            CommandFindAccountID finder = new CommandFindAccountID(account, login);
-            finder.execute();
-            if (finder.getId() != null) {
-                id = finder.getId();
-            }
-            else {
-                return;
-            }
+        CommandFindAccountID finder = new CommandFindAccountID(account, login);
+        finder.execute();
+        if (finder.getId() != null) {
+            id = finder.getId();
         }
-        catch (AccessDeniedException exception) {
-            exception.printStackTrace();
+        else {
             return;
         }
         try {

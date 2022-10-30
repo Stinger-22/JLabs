@@ -228,6 +228,19 @@ public class Application {
                 System.out.println("Month tax: " + commandCalculateTax.getValue());
                 break;
             case 7:
+                menu.selectCommand(new CommandShowActions(account));
+                break;
+            case 8:
+                System.out.print("ActionID: ");
+                int id = ConsoleInput.getScanner().nextInt();
+                System.out.print("Value: ");
+                int value = ConsoleInput.getScanner().nextInt();
+                menu.selectCommand(new CommandAddAction(account, id, value));
+                break;
+            case 9:
+                menu.selectCommand(new CommandShowAction(account));
+                break;
+            case 10:
                 menu.selectCommand(new CommandLogout(this));
                 break;
             default:

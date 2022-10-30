@@ -1,7 +1,9 @@
-package com.labs.complex.command.worker;
+package com.labs.complex.command.user;
 
 import com.labs.complex.account.IAccount;
+import com.labs.complex.account.User;
 import com.labs.complex.account.Worker;
+import com.labs.complex.being.Action;
 import com.labs.complex.command.Command;
 import com.labs.complex.command.CommandFindAccountID;
 import com.labs.complex.command.exception.AccessDeniedException;
@@ -10,19 +12,17 @@ import com.labs.complex.db.DBConnection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class CommandAddUserTax implements Command {
-    private Worker account;
-    private String login;
-    private int taxID;
+public class CommandAddAction implements Command {
+    private User account;
+    private int actionID;
     private int value;
 
-    public CommandAddUserTax(IAccount account, String login, int taxID, int value) throws AccessDeniedException {
-        if (!(account instanceof Worker)) {
+    public CommandAddAction(IAccount account, int actionID, int value) throws AccessDeniedException {
+        if (!(account instanceof User)) {
             throw new AccessDeniedException(account);
         }
-        this.account = (Worker) account;
-        this.login = login;
-        this.taxID = taxID;
+        this.account = (User) account;
+        this.actionID = actionID;
         this.value = value;
     }
 
@@ -30,10 +30,10 @@ public class CommandAddUserTax implements Command {
     public void execute() {
         PreparedStatement statement;
 
-        String addTax = "INSERT INTO [Person].[PersonTax] VALUES (?, ?, ?)";
+        String addTax = "INSERT INTO [Person].[PersonAction] VALUES (?, ?, ?, DEFAULT)";
         statement = DBConnection.getInstance().prepareStatement(addTax);
         int id;
-        CommandFindAccountID finder = new CommandFindAccountID(account, login);
+        CommandFindAccountID finder = new CommandFindAccountID(account, account.getLogin());
         finder.execute();
         if (finder.getId() != null) {
             id = finder.getId();
@@ -43,7 +43,7 @@ public class CommandAddUserTax implements Command {
         }
         try {
             statement.setInt(1, id);
-            statement.setInt(2, taxID);
+            statement.setInt(2, actionID);
             statement.setInt(3, value);
             statement.executeUpdate();
             statement.close();

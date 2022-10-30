@@ -1,9 +1,6 @@
 package com.labs.complex.command;
 
-import com.labs.complex.account.Admin;
 import com.labs.complex.account.IAccount;
-import com.labs.complex.account.Worker;
-import com.labs.complex.command.exception.AccessDeniedException;
 import com.labs.complex.db.DBConnection;
 
 import java.sql.PreparedStatement;
@@ -15,14 +12,9 @@ public class CommandFindAccountID implements Command {
     private String login;
     private Integer id;
 
-    public CommandFindAccountID(IAccount account, String login) throws AccessDeniedException {
-        if ((account instanceof Admin) || (account instanceof Worker)) {
-            this.account = account;
-            this.login = login;
-        }
-        else {
-            throw new AccessDeniedException(account);
-        }
+    public CommandFindAccountID(IAccount account, String login) {
+        this.account = account;
+        this.login = login;
     }
 
     @Override
