@@ -3,7 +3,7 @@ package com.labs.complex.command.exception;
 import com.labs.complex.account.IAccount;
 
 public class AccessDeniedException extends Exception {
-    IAccount account;
+    private IAccount account;
 
     public AccessDeniedException(IAccount account) {
         this.account = account;

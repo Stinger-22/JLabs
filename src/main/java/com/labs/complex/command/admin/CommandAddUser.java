@@ -5,6 +5,7 @@ import com.labs.complex.account.IAccount;
 import com.labs.complex.being.Person;
 import com.labs.complex.command.Command;
 import com.labs.complex.command.exception.AccessDeniedException;
+import com.labs.complex.command.exception.ExistingLoginException;
 import com.labs.complex.command.exception.WorkNotExistsException;
 import com.labs.complex.db.DBConnection;
 
@@ -45,16 +46,25 @@ public class CommandAddUser implements Command {
         catch (SQLException | WorkNotExistsException exception) {
             exception.printStackTrace();
         }
+        catch (ExistingLoginException exception) {
+            System.out.println("This login is already used.");
+        }
     }
 
-    private int createAccount() throws SQLException {
+    private int createAccount() throws SQLException, ExistingLoginException {
         PreparedStatement statement;
 
         String createAccount = "INSERT INTO [dbo].[Account] VALUES (?, ?, 'P')";
         statement = DBConnection.getInstance().prepareStatement(createAccount);
         statement.setString(1, login);
         statement.setString(2, password);
-        statement.executeUpdate();
+        try {
+            statement.executeUpdate();
+        }
+        catch (SQLException exception) {
+            throw new ExistingLoginException(account, login);
+
+        }
         statement.close();
         int id;
 

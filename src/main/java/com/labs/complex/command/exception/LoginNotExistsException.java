@@ -1,7 +1,7 @@
 package com.labs.complex.command.exception;
 
 public class LoginNotExistsException extends Exception {
-    String login;
+    private String login;
 
     public LoginNotExistsException(String login) {
         this.login = login;

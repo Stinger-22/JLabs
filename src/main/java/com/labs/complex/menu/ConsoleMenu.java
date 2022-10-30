@@ -43,11 +43,13 @@ public class ConsoleMenu implements Menu {
 
     private void specificShow(Worker account) {
         System.out.println("\t---MENU---");
-        System.out.println("1. Add user tax");
-        System.out.println("2. Remove user tax");
-        System.out.println("3. Add user benefit");
-        System.out.println("4. Remove user benefit");
-        System.out.println("5. Log out");
+        System.out.println("1. Show taxes");
+        System.out.println("2. Show benefits");
+        System.out.println("3. Add user tax");
+        System.out.println("4. Remove user tax");
+        System.out.println("5. Add user benefit");
+        System.out.println("6. Remove user benefit");
+        System.out.println("7. Log out");
         System.out.print("> ");
     }
 

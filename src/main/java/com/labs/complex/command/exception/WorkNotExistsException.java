@@ -1,7 +1,7 @@
 package com.labs.complex.command.exception;
 
 public class WorkNotExistsException extends Exception {
-    String work;
+    private String work;
 
     public WorkNotExistsException(String work) {
         this.work = work;

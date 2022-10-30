@@ -10,10 +10,7 @@ import com.labs.complex.command.admin.search.CommandSearchUser;
 import com.labs.complex.command.admin.search.CommandSearchUserSalary;
 import com.labs.complex.command.exception.AccessDeniedException;
 import com.labs.complex.command.user.*;
-import com.labs.complex.command.worker.CommandAddUserBenefit;
-import com.labs.complex.command.worker.CommandAddUserTax;
-import com.labs.complex.command.worker.CommandRemoveUserBenefit;
-import com.labs.complex.command.worker.CommandRemoveUserTax;
+import com.labs.complex.command.worker.*;
 import com.labs.complex.db.DBConnection;
 import com.labs.complex.menu.ConsoleMenu;
 import com.labs.complex.menu.Menu;
@@ -158,20 +155,46 @@ public class Application {
     }
 
     private void specificSelect(Worker account, int choose) throws AccessDeniedException {
+        String login;
+        int id, value;
         switch (choose) {
             case 1:
-                menu.selectCommand(new CommandAddUserTax(account));
+                menu.selectCommand(new CommandShowTaxes(account));
                 break;
             case 2:
-                menu.selectCommand(new CommandRemoveUserTax(account));
+                menu.selectCommand(new CommandShowBenefits(account));
                 break;
             case 3:
-                menu.selectCommand(new CommandAddUserBenefit(account));
+                System.out.print("Login: ");
+                login = ConsoleInput.getScanner().next();
+                System.out.print("TaxID: ");
+                id = ConsoleInput.getScanner().nextInt();
+                System.out.print("Value: ");
+                value = ConsoleInput.getScanner().nextInt();
+                menu.selectCommand(new CommandAddUserTax(account, login, id, value));
                 break;
             case 4:
-                menu.selectCommand(new CommandRemoveUserBenefit(account));
+                System.out.print("Login: ");
+                login = ConsoleInput.getScanner().next();
+                System.out.print("TaxID: ");
+                id = ConsoleInput.getScanner().nextInt();
+                menu.selectCommand(new CommandRemoveUserTax(account, login, id));
                 break;
             case 5:
+                System.out.print("Login: ");
+                login = ConsoleInput.getScanner().next();
+                System.out.print("BenefitID: ");
+                id = ConsoleInput.getScanner().nextInt();
+                menu.selectCommand(new CommandAddUserBenefit(account, login, id));
+                break;
+            case 6:
+                System.out.print("Login: ");
+                login = ConsoleInput.getScanner().next();
+                System.out.print("BenefitID: ");
+                id = ConsoleInput.getScanner().nextInt();
+                menu.selectCommand(new CommandRemoveUserBenefit(account, login, id));
+                break;
+            case 7:
                 menu.selectCommand(new CommandLogout(this));
                 break;
             default:
