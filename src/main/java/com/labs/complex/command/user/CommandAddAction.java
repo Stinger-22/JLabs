@@ -33,22 +33,22 @@ public class CommandAddAction implements Command {
         String addTax = "INSERT INTO [Person].[PersonAction] VALUES (?, ?, ?, DEFAULT)";
         statement = DBConnection.getInstance().prepareStatement(addTax);
         int id;
-        CommandFindAccountID finder = new CommandFindAccountID(account, account.getLogin());
-        finder.execute();
-        if (finder.getId() != null) {
-            id = finder.getId();
-        }
-        else {
-            return;
-        }
         try {
+            CommandFindAccountID finder = new CommandFindAccountID(account, account.getLogin());
+            finder.execute();
+            if (finder.getId() != null) {
+                id = finder.getId();
+            }
+            else {
+                return;
+            }
             statement.setInt(1, id);
             statement.setInt(2, actionID);
             statement.setInt(3, value);
             statement.executeUpdate();
             statement.close();
         }
-        catch (SQLException exception) {
+        catch (SQLException | AccessDeniedException exception) {
             exception.printStackTrace();
         }
     }

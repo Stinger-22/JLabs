@@ -63,7 +63,6 @@ public class CommandAddUser implements Command {
         }
         catch (SQLException exception) {
             throw new ExistingLoginException(account, login);
-
         }
         statement.close();
         int id;

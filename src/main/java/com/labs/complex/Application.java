@@ -5,7 +5,7 @@ import com.labs.complex.being.Person;
 import com.labs.complex.command.*;
 import com.labs.complex.command.admin.CommandAddUser;
 import com.labs.complex.command.admin.CommandDeleteUser;
-import com.labs.complex.command.admin.CommandShowUser;
+import com.labs.complex.command.admin.CommandShowUserPerson;
 import com.labs.complex.command.admin.search.CommandSearchUser;
 import com.labs.complex.command.admin.search.CommandSearchUserSalary;
 import com.labs.complex.command.exception.AccessDeniedException;
@@ -110,7 +110,14 @@ public class Application {
             case 4:
                 System.out.print("Login: ");
                 login = ConsoleInput.getScanner().next();
-                menu.selectCommand(new CommandShowUser(account, login));
+                CommandShowUserPerson command = new CommandShowUserPerson(account, login);
+                menu.selectCommand(command);
+                if (command.getPerson() == null) {
+                    System.out.println("User not found");
+                }
+                else {
+                    System.out.println(command.getPerson());
+                }
                 break;
             case 5:
                 menu.selectCommand(new CommandLogout(this));

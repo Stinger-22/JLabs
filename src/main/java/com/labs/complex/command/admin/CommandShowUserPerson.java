@@ -12,11 +12,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CommandShowUser implements Command {
+public class CommandShowUserPerson implements Command {
     private Admin account;
     private String login;
+    private Person person;
 
-    public CommandShowUser(IAccount account, String login) throws AccessDeniedException {
+    public CommandShowUserPerson(IAccount account, String login) throws AccessDeniedException {
         if (!(account instanceof Admin)) {
             throw new AccessDeniedException(account);
         }
@@ -33,7 +34,7 @@ public class CommandShowUser implements Command {
                 return;
             }
             showUser(finder.getId());
-        } catch (SQLException exception) {
+        } catch (SQLException | AccessDeniedException exception) {
             exception.printStackTrace();
         }
     }
@@ -51,14 +52,14 @@ public class CommandShowUser implements Command {
         ResultSet resultSet = statement.executeQuery();
 
         if (resultSet.next()) {
-            Person person = new Person(resultSet.getString(3), resultSet.getString(4),
-                    resultSet.getDouble(5), resultSet.getInt(6), resultSet.getString(9),
-                    resultSet.getString(12)
+            person = new Person(resultSet.getString(3), resultSet.getString(4),
+                    resultSet.getDouble(5), resultSet.getInt(6), resultSet.getString(10),
+                    resultSet.getString(13)
             );
-            System.out.println(person);
         }
-        else {
-            System.out.println("No user found");
-        }
+    }
+
+    public Person getPerson() {
+        return person;
     }
 }

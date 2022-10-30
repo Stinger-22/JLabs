@@ -31,21 +31,21 @@ public class CommandRemoveUserTax implements Command {
         String deleteBenefit = "DELETE FROM [Person].[PersonTax] WHERE PersonID = ? AND TaxID = ?";
         statement = DBConnection.getInstance().prepareStatement(deleteBenefit);
         int id;
-        CommandFindAccountID finder = new CommandFindAccountID(account, login);
-        finder.execute();
-        if (finder.getId() != null) {
-            id = finder.getId();
-        }
-        else {
-            return;
-        }
         try {
+            CommandFindAccountID finder = new CommandFindAccountID(account, login);
+            finder.execute();
+            if (finder.getId() != null) {
+                id = finder.getId();
+            }
+            else {
+                return;
+            }
             statement.setInt(1, id);
             statement.setInt(2, taxID);
             statement.executeUpdate();
             statement.close();
         }
-        catch (SQLException exception) {
+        catch (SQLException | AccessDeniedException exception) {
             exception.printStackTrace();
         }
     }
