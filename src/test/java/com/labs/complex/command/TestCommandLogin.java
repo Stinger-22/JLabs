@@ -9,7 +9,10 @@ import com.labs.complex.being.Benefit;
 import com.labs.complex.being.Person;
 import com.labs.complex.being.Tax;
 import com.labs.complex.exception.NoRightException;
-import org.junit.*;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -17,7 +20,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class TestCommandLogin {
     private static Application application;

@@ -1,11 +1,11 @@
 package com.labs.complex.command.worker;
 
+import com.labs.complex.Application;
 import com.labs.complex.being.Person;
 import com.labs.complex.command.CommandExit;
 import com.labs.complex.command.CommandLogin;
 import com.labs.complex.command.CommandLogout;
 import com.labs.complex.exception.AccessDeniedException;
-import com.labs.complex.Application;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;

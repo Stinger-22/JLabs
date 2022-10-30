@@ -1,11 +1,11 @@
 package com.labs.complex;
 
-import com.labs.complex.command.CommandExit;
 import com.labs.complex.util.ConsoleInput;
 import org.junit.After;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 public class TestApplication {
     private Application application;

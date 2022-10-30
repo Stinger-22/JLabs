@@ -4,9 +4,12 @@ import com.labs.complex.Application;
 import com.labs.complex.account.Admin;
 import com.labs.complex.account.User;
 import com.labs.complex.account.Worker;
-import com.labs.complex.being.*;
-import com.labs.complex.exception.NoRightException;
+import com.labs.complex.being.Action;
+import com.labs.complex.being.Benefit;
+import com.labs.complex.being.Person;
+import com.labs.complex.being.Tax;
 import com.labs.complex.db.DBConnection;
+import com.labs.complex.exception.NoRightException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

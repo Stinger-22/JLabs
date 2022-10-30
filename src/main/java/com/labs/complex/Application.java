@@ -1,17 +1,22 @@
 package com.labs.complex;
 
-import com.labs.complex.account.*;
+import com.labs.complex.account.Admin;
+import com.labs.complex.account.IAccount;
+import com.labs.complex.account.User;
+import com.labs.complex.account.Worker;
 import com.labs.complex.being.Person;
-import com.labs.complex.command.*;
+import com.labs.complex.command.CommandExit;
+import com.labs.complex.command.CommandLogin;
+import com.labs.complex.command.CommandLogout;
 import com.labs.complex.command.admin.CommandAddUser;
 import com.labs.complex.command.admin.CommandDeleteUser;
 import com.labs.complex.command.admin.CommandShowUserPerson;
 import com.labs.complex.command.admin.search.CommandSearchUser;
 import com.labs.complex.command.admin.search.CommandSearchUserSalary;
-import com.labs.complex.exception.AccessDeniedException;
 import com.labs.complex.command.user.*;
 import com.labs.complex.command.worker.*;
 import com.labs.complex.db.DBConnection;
+import com.labs.complex.exception.AccessDeniedException;
 import com.labs.complex.menu.ConsoleMenu;
 import com.labs.complex.menu.Menu;
 import com.labs.complex.util.ConsoleInput;

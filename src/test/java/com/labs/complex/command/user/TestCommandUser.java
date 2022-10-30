@@ -8,12 +8,16 @@ import com.labs.complex.command.CommandExit;
 import com.labs.complex.command.CommandLogin;
 import com.labs.complex.command.CommandLogout;
 import com.labs.complex.exception.AccessDeniedException;
-import org.junit.*;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class TestCommandUser {
     private static Application application;

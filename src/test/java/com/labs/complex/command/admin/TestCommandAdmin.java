@@ -7,7 +7,6 @@ import com.labs.complex.command.CommandLogin;
 import com.labs.complex.command.CommandLogout;
 import com.labs.complex.command.admin.search.CommandSearchUser;
 import com.labs.complex.command.admin.search.CommandSearchUserSalary;
-import com.labs.complex.command.user.CommandShowActions;
 import com.labs.complex.exception.AccessDeniedException;
 import org.junit.After;
 import org.junit.AfterClass;
