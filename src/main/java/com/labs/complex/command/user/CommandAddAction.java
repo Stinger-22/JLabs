@@ -3,18 +3,24 @@ package com.labs.complex.command.user;
 import com.labs.complex.account.IAccount;
 import com.labs.complex.account.User;
 import com.labs.complex.command.Command;
+import com.labs.complex.command.CommandExit;
 import com.labs.complex.db.DBConnection;
 import com.labs.complex.exception.AccessDeniedException;
+import com.labs.complex.log.LogUtilities;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CommandAddAction implements Command {
     private User account;
     private int actionID;
     private int value;
     private boolean add = false;
+
+    private static final Logger logger = Logger.getLogger(CommandAddAction.class.getName());
 
     public CommandAddAction(IAccount account, int actionID, int value) throws AccessDeniedException {
         if (!(account instanceof User)) {
@@ -27,6 +33,7 @@ public class CommandAddAction implements Command {
 
     @Override
     public void execute() {
+        LogUtilities.setupLogger(logger);
         PreparedStatement statement;
 
         String addTax = "INSERT INTO [Person].[PersonAction] VALUES (?, ?, ?, DEFAULT)";
@@ -49,7 +56,7 @@ public class CommandAddAction implements Command {
                 System.out.println("You've already added this action today.");
             }
             else {
-                exception.printStackTrace();
+                logger.log(Level.SEVERE, "Database or SQL Error", exception);
             }
         }
     }
@@ -72,7 +79,7 @@ public class CommandAddAction implements Command {
             statement.close();
         }
         catch (SQLException exception) {
-            exception.printStackTrace();
+            logger.log(Level.SEVERE, "Database or SQL Error", exception);
         }
         return id;
     }

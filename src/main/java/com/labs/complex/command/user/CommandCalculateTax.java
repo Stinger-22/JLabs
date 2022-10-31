@@ -5,16 +5,22 @@ import com.labs.complex.account.User;
 import com.labs.complex.being.Action;
 import com.labs.complex.being.Tax;
 import com.labs.complex.command.Command;
+import com.labs.complex.command.CommandLogin;
 import com.labs.complex.db.DBConnection;
 import com.labs.complex.exception.AccessDeniedException;
+import com.labs.complex.log.LogUtilities;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CommandCalculateTax implements Command {
     private User account;
     private double value = 0;
+
+    private static final Logger logger = Logger.getLogger(CommandCalculateTax.class.getName());
 
     public CommandCalculateTax(IAccount account) throws AccessDeniedException {
         if (!(account instanceof User)) {
@@ -25,6 +31,7 @@ public class CommandCalculateTax implements Command {
 
     @Override
     public void execute() {
+        LogUtilities.setupLogger(logger);
         for (Tax tax : account.getTaxList()) {
             if (tax.isAbsolute()) {
                 value += tax.getValue();
@@ -49,7 +56,7 @@ public class CommandCalculateTax implements Command {
             statement.close();
         }
         catch (SQLException exception) {
-            exception.printStackTrace();
+            logger.log(Level.SEVERE, "Database or SQL Error", exception);
         }
     }
 

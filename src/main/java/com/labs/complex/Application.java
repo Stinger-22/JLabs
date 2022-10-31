@@ -17,23 +17,29 @@ import com.labs.complex.command.user.*;
 import com.labs.complex.command.worker.*;
 import com.labs.complex.db.DBConnection;
 import com.labs.complex.exception.AccessDeniedException;
+import com.labs.complex.log.LogUtilities;
 import com.labs.complex.menu.ConsoleMenu;
 import com.labs.complex.menu.Menu;
 import com.labs.complex.util.ConsoleInput;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Application {
     private final DBConnection dbConnection = DBConnection.getInstance();
     private IAccount account;
     private Menu menu;
 
+    private static final Logger logger = Logger.getLogger(Application.class.getName());
+
     public Application() {
 
     }
 
     public void start() {
+        LogUtilities.setupLogger(logger);
         menu = new ConsoleMenu();
         Scanner scanner = ConsoleInput.getScanner();
         int choose;
@@ -71,6 +77,7 @@ public class Application {
             else {
                 switch (choose) {
                     case 1:
+                        logger.log(Level.INFO, "SELECTED CommandLogin");
                         Scanner scanner = ConsoleInput.getScanner();
                         System.out.print("Login: ");
                         String login = scanner.next();
@@ -79,6 +86,7 @@ public class Application {
                         menu.selectCommand(new CommandLogin(this, login, password));
                         break;
                     case 2:
+                        logger.log(Level.INFO, "SELECTED CommandExit");
                         menu.selectCommand(new CommandExit(this));
                         return false;
                     default:
@@ -88,6 +96,7 @@ public class Application {
             }
         }
         catch (AccessDeniedException exception) {
+            logger.log(Level.SEVERE, "AccessDenied to command which is shown in menu", exception);
             new CommandExit(this);
         }
         return true;
@@ -101,8 +110,14 @@ public class Application {
                 login = ConsoleInput.getScanner().next();
                 System.out.print("Password: ");
                 String password = ConsoleInput.getScanner().next();
-
-                menu.selectCommand(new CommandAddUser(account, login, password, consoleCreatePerson()));
+                try {
+                    Person person = consoleCreatePerson();
+                    menu.selectCommand(new CommandAddUser(account, login, password, person));
+                }
+                catch (InputMismatchException exception) {
+                    System.out.println("Wrong input");
+                    ConsoleInput.getScanner().nextLine();
+                }
                 break;
             case 2:
                 System.out.print("Login: ");
@@ -128,6 +143,7 @@ public class Application {
                 menu.selectCommand(new CommandLogout(this));
                 break;
             default:
+                System.out.println(choose);
                 System.out.println("Wrong command");
                 break;
         }
@@ -177,34 +193,58 @@ public class Application {
                 menu.selectCommand(new CommandShowBenefits(account));
                 break;
             case 3:
-                System.out.print("Login: ");
-                login = ConsoleInput.getScanner().next();
-                System.out.print("TaxID: ");
-                id = ConsoleInput.getScanner().nextInt();
-                System.out.print("Value: ");
-                value = ConsoleInput.getScanner().nextInt();
-                menu.selectCommand(new CommandAddUserTax(account, login, id, value));
+                try {
+                    System.out.print("Login: ");
+                    login = ConsoleInput.getScanner().next();
+                    System.out.print("TaxID: ");
+                    id = ConsoleInput.getScanner().nextInt();
+                    System.out.print("Value: ");
+                    value = ConsoleInput.getScanner().nextInt();
+                    menu.selectCommand(new CommandAddUserTax(account, login, id, value));
+                }
+                catch (InputMismatchException exception) {
+                    System.out.println("Wrong input");
+                    ConsoleInput.getScanner().nextLine();
+                }
                 break;
             case 4:
-                System.out.print("Login: ");
-                login = ConsoleInput.getScanner().next();
-                System.out.print("TaxID: ");
-                id = ConsoleInput.getScanner().nextInt();
-                menu.selectCommand(new CommandRemoveUserTax(account, login, id));
+                try {
+                    System.out.print("Login: ");
+                    login = ConsoleInput.getScanner().next();
+                    System.out.print("TaxID: ");
+                    id = ConsoleInput.getScanner().nextInt();
+                    menu.selectCommand(new CommandRemoveUserTax(account, login, id));
+                }
+                catch (InputMismatchException exception) {
+                    System.out.println("Wrong input");
+                    ConsoleInput.getScanner().nextLine();
+                }
                 break;
             case 5:
-                System.out.print("Login: ");
-                login = ConsoleInput.getScanner().next();
-                System.out.print("BenefitID: ");
-                id = ConsoleInput.getScanner().nextInt();
-                menu.selectCommand(new CommandAddUserBenefit(account, login, id));
+                try {
+                    System.out.print("Login: ");
+                    login = ConsoleInput.getScanner().next();
+                    System.out.print("BenefitID: ");
+                    id = ConsoleInput.getScanner().nextInt();
+                    menu.selectCommand(new CommandAddUserBenefit(account, login, id));
+                }
+                catch (InputMismatchException exception) {
+                    System.out.println("Wrong input");
+                    ConsoleInput.getScanner().nextLine();
+                }
                 break;
             case 6:
-                System.out.print("Login: ");
-                login = ConsoleInput.getScanner().next();
-                System.out.print("BenefitID: ");
-                id = ConsoleInput.getScanner().nextInt();
-                menu.selectCommand(new CommandRemoveUserBenefit(account, login, id));
+                try {
+                    System.out.print("Login: ");
+                    login = ConsoleInput.getScanner().next();
+                    System.out.print("BenefitID: ");
+                    id = ConsoleInput.getScanner().nextInt();
+                    menu.selectCommand(new CommandRemoveUserBenefit(account, login, id));
+                }
+                catch (InputMismatchException exception) {
+                    System.out.println("Wrong input");
+                    ConsoleInput.getScanner().nextLine();
+                }
                 break;
             case 7:
                 menu.selectCommand(new CommandLogout(this));
@@ -218,15 +258,19 @@ public class Application {
     private void specificSelect(User account, int choose) throws AccessDeniedException {
         switch (choose) {
             case 1:
+                logger.log(Level.INFO, "SELECTED CommandShowUserInfo");
                 menu.selectCommand(new CommandShowUserInfo(account));
                 break;
             case 2:
+                logger.log(Level.INFO, "SELECTED CommandShowTax");
                 menu.selectCommand(new CommandShowTax(account));
                 break;
             case 3:
+                logger.log(Level.INFO, "SELECTED CommandShowBenefit");
                 menu.selectCommand(new CommandShowBenefit(account));
                 break;
             case 4:
+                logger.log(Level.INFO, "SELECTED CommandSearchTax");
                 ConsoleInput.getScanner().nextLine();
                 System.out.print("Searching tax: ");
                 CommandSearchTax commandSearchTax = new CommandSearchTax(account, ConsoleInput.getScanner().nextLine());
@@ -234,27 +278,39 @@ public class Application {
                 System.out.println(commandSearchTax.getTaxList());
                 break;
             case 5:
+                logger.log(Level.INFO, "SELECTED CommandSortTax");
                 menu.selectCommand(new CommandSortTax(account));
                 break;
             case 6:
+                logger.log(Level.INFO, "SELECTED CommandCalculateTax");
                 CommandCalculateTax commandCalculateTax = new CommandCalculateTax(account);
                 menu.selectCommand(commandCalculateTax);
                 System.out.println("Month tax: " + commandCalculateTax.getValue());
                 break;
             case 7:
+                logger.log(Level.INFO, "SELECTED CommandShowActions");
                 menu.selectCommand(new CommandShowActions(account));
                 break;
             case 8:
-                System.out.print("ActionID: ");
-                int id = ConsoleInput.getScanner().nextInt();
-                System.out.print("Value: ");
-                int value = ConsoleInput.getScanner().nextInt();
-                menu.selectCommand(new CommandAddAction(account, id, value));
+                logger.log(Level.INFO, "SELECTED CommandAddAction");
+                try {
+                    System.out.print("ActionID: ");
+                    int id = ConsoleInput.getScanner().nextInt();
+                    System.out.print("Value: ");
+                    int value = ConsoleInput.getScanner().nextInt();
+                    menu.selectCommand(new CommandAddAction(account, id, value));
+                }
+                catch (InputMismatchException exception) {
+                    System.out.println("Wrong input");
+                    ConsoleInput.getScanner().nextLine();
+                }
                 break;
             case 9:
+                logger.log(Level.INFO, "SELECTED CommandShowAction");
                 menu.selectCommand(new CommandShowAction(account));
                 break;
             case 10:
+                logger.log(Level.INFO, "SELECTED CommandLogout");
                 menu.selectCommand(new CommandLogout(this));
                 break;
             default:
@@ -265,7 +321,6 @@ public class Application {
 
     private Person consoleCreatePerson() {
         Scanner scanner = ConsoleInput.getScanner();
-
         System.out.print("Name: ");
         String name = scanner.next();
         System.out.print("Surname: ");

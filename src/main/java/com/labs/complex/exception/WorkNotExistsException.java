@@ -14,8 +14,6 @@ public class WorkNotExistsException extends Exception {
 
     @Override
     public String toString() {
-        return "WorkNotExistsException{" +
-                "work='" + work + '\'' +
-                "} " + super.toString();
+        return "WorkNotExistsException{work='" + work + "'} " + super.toString();
     }
 }

@@ -19,9 +19,10 @@ public class TestApplication {
 
     @Test
     public void testUser() {
-        String input = "1\n" +
+        String input = "-1\n1\n" +
                 "TestPerson2\n" +
                 "testperson2\n" +
+                "WRONGINPUT\n" +
                 "1\n" +
                 "2\n" +
                 "3\n" +
@@ -30,6 +31,8 @@ public class TestApplication {
                 "5\n" +
                 "6\n" +
                 "7\n" +
+                "8\n" +
+                "WRONGINPUT\n" +
                 "8\n" +
                 "6\n" +
                 "10\n" +
@@ -50,15 +53,27 @@ public class TestApplication {
                 "1\n" +
                 "2\n" +
                 "3\n" +
+                "WRONGINPUT\n" +
+                "WRONGINPUT\n" +
+                "3\n" +
                 "TestPerson2\n" +
                 "4\n" +
                 "10\n" +
                 "4\n" +
+                "WRONGINPUT\n" +
+                "WRONGINPUT\n" +
+                "4\n" +
                 "TestPerson2\n" +
                 "4\n" +
                 "5\n" +
+                "WRONGINPUT\n" +
+                "WRONGINPUT\n" +
+                "5\n" +
                 "TestPerson2\n" +
                 "3\n" +
+                "6\n" +
+                "WRONGINPUT\n" +
+                "WRONGINPUT\n" +
                 "6\n" +
                 "TestPerson2\n" +
                 "3\n" +
@@ -76,6 +91,12 @@ public class TestApplication {
                 "TestAdmin\n" +
                 "testadmin\n" +
                 "1\n" +
+                "WRONGINPUT\n" +
+                "WRONGINPUT\n" +
+                "WRONGINPUT\n" +
+                "WRONGINPUT\n" +
+                "WRONGINPUT\n" +
+                "1\n" +
                 "Test\n" +
                 "test\n" +
                 "t\n" +
@@ -84,6 +105,7 @@ public class TestApplication {
                 "0\n" +
                 "\n" +
                 "\n" +
+                "2\n" +
                 "Test\n" +
                 "3\n" +
                 "1\n" +

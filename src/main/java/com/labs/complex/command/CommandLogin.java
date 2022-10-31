@@ -10,17 +10,25 @@ import com.labs.complex.being.Person;
 import com.labs.complex.being.Tax;
 import com.labs.complex.db.DBConnection;
 import com.labs.complex.exception.NoRightException;
+import com.labs.complex.log.LogUtilities;
+import com.labs.complex.mail.MailSender;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CommandLogin implements Command {
     private Application application;
     private String login;
     private String password;
+
+    private static final Logger logger = Logger.getLogger(CommandLogin.class.getName());
 
     public CommandLogin(Application application, String login, String password) {
         this.application = application;
@@ -30,6 +38,7 @@ public class CommandLogin implements Command {
 
     @Override
     public void execute() {
+        LogUtilities.setupLogger(logger);
         PreparedStatement statement;
         ResultSet resultSet;
 
@@ -41,6 +50,7 @@ public class CommandLogin implements Command {
             resultSet = statement.executeQuery();
             if (!resultSet.next()) {
                 System.out.println("Login failed.");
+                logger.log(Level.WARNING, "Trying to login with wrong login or password", "Login: " + login + "Password: " + password);
                 statement.close();
                 return;
             }
@@ -56,10 +66,12 @@ public class CommandLogin implements Command {
                     resultSet = statement.executeQuery();
                     if (resultSet.next()) {
                         application.setAccount(new Admin(login));
+                        logger.log(Level.FINE, "Successfully logged in as admin.", application.getAccount());
                     }
                     else {
-                        throw new NoRightException(login, role);
-                        //TODO SEND MESSAGE TO MAIL
+                        RuntimeException exception = new NoRightException(login, role);
+                        logger.log(Level.SEVERE, "Admin account exists with no AdminID", exception);
+                        MailSender.sendErrorsToDeveloper();
                     }
                     statement.close();
                     break;
@@ -70,10 +82,12 @@ public class CommandLogin implements Command {
                     resultSet = statement.executeQuery();
                     if (resultSet.next()) {
                         application.setAccount(new Worker(login, resultSet.getString("Name"), resultSet.getString("Surname")));
+                        logger.log(Level.FINE, "Successfully logged in as worker.", application.getAccount());
                     }
                     else {
-                        throw new NoRightException(login, role);
-                        //TODO SEND MESSAGE TO MAIL
+                        RuntimeException exception = new NoRightException(login, role);
+                        logger.log(Level.SEVERE, "Worker account exists with no WorkerID", exception);
+                        MailSender.sendErrorsToDeveloper();
                     }
                     statement.close();
                     break;
@@ -81,16 +95,20 @@ public class CommandLogin implements Command {
                     setupUser(accountID);
                     break;
                 default:
-                    throw new NoRightException(login, role);
-                    //TODO SEND MESSAGE TO MAIL
+                    RuntimeException exception = new NoRightException(login, role);
+                    logger.log(Level.SEVERE, "Alien role", exception);
+                    MailSender.sendErrorsToDeveloper();
             }
         }
         catch (SQLException exception) {
-            exception.printStackTrace();
+            logger.log(Level.SEVERE, "Database or SQL Error", exception);
+        }
+        catch (MessagingException | IOException exception) {
+            logger.log(Level.WARNING, "Can't send error log to developer", exception);
         }
     }
 
-    private void setupUser(int accountID) throws SQLException, NoRightException {
+    private void setupUser(int accountID) throws SQLException, NoRightException, MessagingException, IOException {
         PreparedStatement statement;
         ResultSet r;
         Person person;
@@ -113,8 +131,10 @@ public class CommandLogin implements Command {
             personID = r.getInt("PersonID");
         }
         else {
-            //TODO SEND MESSAGE TO MAIL
-            throw new NoRightException(login, 'P');
+            RuntimeException exception = new NoRightException(login, 'P');
+            logger.log(Level.SEVERE, "Person account exists with no PersonID", exception);
+            MailSender.sendErrorsToDeveloper();
+            return;
         }
         statement.close();
         // List tax

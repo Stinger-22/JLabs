@@ -19,9 +19,6 @@ public class ExistingLoginException extends Exception {
 
     @Override
     public String toString() {
-        return "ExistingLoginException{" +
-                "account=" + account +
-                ", login='" + login + '\'' +
-                "} " + super.toString();
+        return "ExistingLoginException{account=" + account + ", login='" + login + "'} " + super.toString();
     }
 }

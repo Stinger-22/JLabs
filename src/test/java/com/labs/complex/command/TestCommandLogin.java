@@ -8,7 +8,6 @@ import com.labs.complex.being.Action;
 import com.labs.complex.being.Benefit;
 import com.labs.complex.being.Person;
 import com.labs.complex.being.Tax;
-import com.labs.complex.exception.NoRightException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -21,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 public class TestCommandLogin {
     private static Application application;
@@ -46,29 +44,12 @@ public class TestCommandLogin {
         new CommandLogin(application, "TestAdmin", "testadmin").execute();
         assertEquals(new Admin("TestAdmin"), application.getAccount());
     }
+
     @Test
     public void testLoginNoRight() {
-        CommandLogin noAdmin = new CommandLogin(application, "TestNoAdmin", "testnoadmin");
-        CommandLogin noWorker = new CommandLogin(application, "TestNoWorker", "testnoworker");
-        CommandLogin noUser = new CommandLogin(application, "TestNoPerson", "testnoperson");
-        try {
-            noAdmin.execute();
-            fail("NoRightException wasn't thrown");
-        }
-        catch (NoRightException ignored) {
-        }
-        try {
-            noWorker.execute();
-            fail("NoRightException wasn't thrown");
-        }
-        catch (NoRightException ignored) {
-        }
-        try {
-            noUser.execute();
-            fail("NoRightException wasn't thrown");
-        }
-        catch (NoRightException ignored) {
-        }
+        new CommandLogin(application, "TestNoAdmin", "testnoadmin").execute();
+        new CommandLogin(application, "TestNoWorker", "testnoworker").execute();
+        new CommandLogin(application, "TestNoPerson", "testnoperson").execute();
     }
 
     @Test
