@@ -87,21 +87,6 @@ public class TestCommandAdmin {
     }
 
     @Test
-    public void testAdminCommandsSearch() throws AccessDeniedException {
-        new CommandLogin(application, "TestAdmin", "testadmin").execute();
-        System.out.println("TEST BY LOGIN FILTER");
-        new CommandSearchUser(application.getAccount(), 1, "Test").execute();
-        System.out.println("TEST BY NAME FILTER");
-        new CommandSearchUser(application.getAccount(), 2, "Test").execute();
-        System.out.println("TEST BY SURNAME FILTER");
-        new CommandSearchUser(application.getAccount(), 3, "Person").execute();
-        System.out.println("TEST BY WORK FILTER");
-        new CommandSearchUser(application.getAccount(), 4, "Test").execute();
-        System.out.println("TEST BY SALARY FILTER");
-        new CommandSearchUserSalary(application.getAccount(), 0, 10).execute();
-    }
-
-    @Test
     public void testAdminCommandsAccess() {
         new CommandLogin(application, "TestPerson", "testperson").execute();
         Person person1 = new Person("Test", "Person", 0.0, 0, null, null);

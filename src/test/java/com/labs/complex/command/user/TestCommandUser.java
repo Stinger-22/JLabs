@@ -85,16 +85,6 @@ public class TestCommandUser {
     }
 
     @Test
-    public void testUserCommandsShow() throws AccessDeniedException {
-        new CommandLogin(application, "TestPerson", "testperson").execute();
-        new CommandShowUserInfo(application.getAccount()).execute();
-        new CommandShowTax(application.getAccount()).execute();
-        new CommandShowBenefit(application.getAccount()).execute();
-        new CommandShowActions(application.getAccount()).execute();
-        new CommandShowAction(application.getAccount()).execute();
-    }
-
-    @Test
     public void testUserCommandsAccess() {
         new CommandLogin(application, "TestAdmin", "testadmin").execute();
         try {

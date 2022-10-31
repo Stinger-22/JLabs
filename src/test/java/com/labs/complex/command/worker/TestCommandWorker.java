@@ -46,15 +46,6 @@ public class TestCommandWorker {
     }
 
     @Test
-    public void testWorkerCommandsShow() throws AccessDeniedException {
-        new CommandLogin(application, "TestWorker", "testworker").execute();
-        System.out.println("TAXES:");
-        new CommandShowTaxes(application.getAccount()).execute();
-        System.out.println("BENEFITS:");
-        new CommandShowBenefits(application.getAccount()).execute();
-    }
-
-    @Test
     public void testWorkerCommandsAccess() {
         new CommandLogin(application, "TestPerson", "testperson").execute();
         Person person1 = new Person("Test", "Person", 0.0, 0, null, null);

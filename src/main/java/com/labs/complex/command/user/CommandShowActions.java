@@ -3,7 +3,6 @@ package com.labs.complex.command.user;
 import com.labs.complex.account.IAccount;
 import com.labs.complex.account.User;
 import com.labs.complex.command.Command;
-import com.labs.complex.command.CommandLogin;
 import com.labs.complex.db.DBConnection;
 import com.labs.complex.exception.AccessDeniedException;
 
