@@ -9,12 +9,12 @@ import com.labs.complex.exception.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommandSearchTax implements Command {
+public class CommandSearchTaxName implements Command {
     private User account;
     private String filter;
     private List<Tax> taxList;
 
-    public CommandSearchTax(IAccount account, String filter) throws AccessDeniedException {
+    public CommandSearchTaxName(IAccount account, String filter) throws AccessDeniedException {
         if (!(account instanceof User)) {
             throw new AccessDeniedException(account);
         }

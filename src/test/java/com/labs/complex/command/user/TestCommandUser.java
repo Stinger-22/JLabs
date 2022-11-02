@@ -40,7 +40,7 @@ public class TestCommandUser {
     @Test
     public void testSearchTax() throws AccessDeniedException {
         new CommandLogin(application, "TestPerson1", "testperson1").execute();
-        CommandSearchTax commandSearchTax = new CommandSearchTax(application.getAccount(), "1");
+        CommandSearchTaxName commandSearchTax = new CommandSearchTaxName(application.getAccount(), "1");
         List<Tax> taxList = new ArrayList<>(1);
         taxList.add(new Tax("TestTax1", 50, true));
         commandSearchTax.execute();
@@ -108,11 +108,11 @@ public class TestCommandUser {
             fail("Another type of account has access to CommandShowAction");
         } catch (AccessDeniedException ignored) {}
         try {
-            new CommandSearchTax(application.getAccount(), "Test").execute();
+            new CommandSearchTaxName(application.getAccount(), "Test").execute();
             fail("Another type of account has access to CommandSearchTax");
         } catch (AccessDeniedException ignored) {}
         try {
-            new CommandSearchTax(application.getAccount(), "Test").execute();
+            new CommandSearchTaxName(application.getAccount(), "Test").execute();
             fail("Another type of account has access to CommandSearchTax");
         } catch (AccessDeniedException ignored) {}
         try {

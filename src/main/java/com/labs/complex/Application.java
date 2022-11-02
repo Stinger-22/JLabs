@@ -270,12 +270,34 @@ public class Application {
                 menu.selectCommand(new CommandShowBenefit(account));
                 break;
             case 4:
-                logger.log(Level.INFO, "SELECTED CommandSearchTax");
-                ConsoleInput.getScanner().nextLine();
-                System.out.print("Searching tax: ");
-                CommandSearchTax commandSearchTax = new CommandSearchTax(account, ConsoleInput.getScanner().nextLine());
-                menu.selectCommand(commandSearchTax);
-                System.out.println(commandSearchTax.getTaxList());
+                System.out.println("1. Search by name");
+                System.out.println("2. Search by value");
+                choose = ConsoleInput.getScanner().nextInt();
+                switch (choose) {
+                    case 1:
+                        logger.log(Level.INFO, "SELECTED CommandSearchTaxName");
+                        ConsoleInput.getScanner().nextLine();
+                        System.out.print("Searching tax with name: ");
+                        CommandSearchTaxName commandSearchTax = new CommandSearchTaxName(account, ConsoleInput.getScanner().nextLine());
+                        menu.selectCommand(commandSearchTax);
+                        System.out.println(commandSearchTax.getTaxList());
+                        break;
+                    case 2:
+                        logger.log(Level.INFO, "SELECTED CommandSearchTaxValue");
+                        ConsoleInput.getScanner().nextLine();
+                        int min, max;
+                        System.out.print("Min tax value: ");
+                        min = ConsoleInput.getScanner().nextInt();
+                        System.out.print("Max tax value: ");
+                        max = ConsoleInput.getScanner().nextInt();
+                        CommandSearchTaxValue commandSearchTaxValue = new CommandSearchTaxValue(account, min, max);
+                        menu.selectCommand(commandSearchTaxValue);
+                        System.out.println(commandSearchTaxValue.getTaxList());
+                        break;
+                    default:
+                        System.out.println("Wrong command");
+                        break;
+                }
                 break;
             case 5:
                 logger.log(Level.INFO, "SELECTED CommandSortTax");
