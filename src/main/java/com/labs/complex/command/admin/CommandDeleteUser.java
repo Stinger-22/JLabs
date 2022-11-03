@@ -10,6 +10,9 @@ import com.labs.complex.exception.AccessDeniedException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * Command class to delete user
+ */
 public class CommandDeleteUser implements Command {
     private Admin account;
     private String login;

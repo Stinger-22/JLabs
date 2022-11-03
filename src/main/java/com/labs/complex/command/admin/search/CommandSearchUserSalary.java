@@ -11,6 +11,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Command class for searching user by salary
+ */
 public class CommandSearchUserSalary implements Command {
     private Admin account;
     private double min;

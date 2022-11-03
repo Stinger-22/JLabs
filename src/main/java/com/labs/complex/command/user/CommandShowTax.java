@@ -5,6 +5,9 @@ import com.labs.complex.account.User;
 import com.labs.complex.command.Command;
 import com.labs.complex.exception.AccessDeniedException;
 
+/**
+ * Command class to show user taxes
+ */
 public class CommandShowTax implements Command {
     private User account;
 

@@ -38,6 +38,9 @@ public class Application {
 
     }
 
+    /**
+     * Make application run
+     */
     public void start() {
         LogUtilities.setupLogger(logger);
         menu = new ConsoleMenu();
@@ -55,14 +58,27 @@ public class Application {
         } while (select(account, choose));
     }
 
+    /**
+     * Get currently logged in account
+     * @return currently logged in account
+     */
     public IAccount getAccount() {
         return account;
     }
 
+    /**
+     * Set currently logged in account
+     */
     public void setAccount(IAccount account) {
         this.account = account;
     }
 
+    /**
+     * Select appropriate submenu for handling user input depending on type of logged in account
+     * @param account account which is logged in
+     * @param choose number of picked command
+     * @return true if application continues running; false if user exited from program
+     */
     public boolean select(IAccount account, int choose) {
         try {
             if (account instanceof Admin) {
@@ -272,6 +288,7 @@ public class Application {
             case 4:
                 System.out.println("1. Search by name");
                 System.out.println("2. Search by value");
+                System.out.print("> ");
                 choose = ConsoleInput.getScanner().nextInt();
                 switch (choose) {
                     case 1:

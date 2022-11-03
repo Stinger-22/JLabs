@@ -63,7 +63,7 @@ public class TestCommandUser {
         CommandCalculateTax command = new CommandCalculateTax(application.getAccount());
         command.execute();
 
-        assertEquals(55.2, command.getValue(), 0.001);
+        assertEquals(55.0, command.getValue(), 0.001);
     }
 
     @Test

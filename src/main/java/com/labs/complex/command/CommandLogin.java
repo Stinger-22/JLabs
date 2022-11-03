@@ -23,6 +23,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Command class for logging in to application
+ */
 public class CommandLogin implements Command {
     private Application application;
     private String login;

@@ -5,6 +5,9 @@ import java.io.FileNotFoundException;
 import java.sql.*;
 import java.util.Scanner;
 
+/**
+ * Singleton class which is responsible for connection to database and running queries
+ */
 public class DBConnection {
     private static DBConnection dbConnection;
 
@@ -20,6 +23,10 @@ public class DBConnection {
         }
     }
 
+    /**
+     * Get instance of DBConnection
+     * @return instance of DBConnection
+     */
     public static DBConnection getInstance() {
         if (dbConnection == null) {
             dbConnection = new DBConnection();
@@ -48,6 +55,10 @@ public class DBConnection {
         dbConnection = null;
     }
 
+    /**
+     * Create statement for prepared in advance queries
+     * @return statement
+     */
     public Statement createStatement() {
         try {
             return connection.createStatement();
@@ -58,6 +69,11 @@ public class DBConnection {
         return null;
     }
 
+    /**
+     * Prepare statement in which data can be safely inserted
+     * @param query query template
+     * @return prepared statement
+     */
     public PreparedStatement prepareStatement(String query) {
         try {
             return connection.prepareStatement(query);

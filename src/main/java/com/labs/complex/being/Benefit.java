@@ -2,13 +2,24 @@ package com.labs.complex.being;
 
 import java.util.Objects;
 
+/**
+ * Class which represents different benefits
+ */
 public class Benefit {
     private String description;
 
+    /**
+     * Benefit constructor
+     * @param description description of benefit
+     */
     public Benefit(String description) {
         this.description = description;
     }
 
+    /**
+     * Get description of benefit
+     * @return description of benefit
+     */
     public String getDescription() {
         return description;
     }

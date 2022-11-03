@@ -12,6 +12,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Command class to show user info with given UserID
+ */
 public class CommandShowUserPerson implements Command {
     private Admin account;
     private String login;

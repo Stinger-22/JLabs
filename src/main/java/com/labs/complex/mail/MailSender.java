@@ -13,6 +13,9 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Singleton class responsible for arranging messages and sending them via email
+ */
 public class MailSender {
     private static MailSender mailSender;
 
@@ -41,6 +44,12 @@ public class MailSender {
         session = Session.getInstance(properties, authenticator);
     }
 
+    /**
+     * Get instance of MailSender for sending email message
+     * @return MailSender instance
+     * @throws FileNotFoundException settings file is not found
+     * @throws AddressException file with email login and password is not found
+     */
     public static MailSender getMailSender() throws FileNotFoundException, AddressException {
         if (mailSender == null) {
             mailSender = new MailSender();
@@ -69,10 +78,22 @@ public class MailSender {
         return properties;
     }
 
+    /**
+     * Set attachment file for messages
+     * @param attachment attachment file for messages
+     */
     public void setAttachment(File attachment) {
         this.attachment = attachment;
     }
 
+    /**
+     * Send message
+     * @param receiver email of receiver
+     * @param subject subject of message
+     * @param text text of message
+     * @throws MessagingException setup message problems
+     * @throws IOException attachment file problems
+     */
     public void sendMessageAttachment(String receiver, String subject, String text) throws MessagingException, IOException {
         if (attachment == null) {
             throw new IllegalStateException("No attachment file is set. Use method setAttachment");
@@ -100,6 +121,11 @@ public class MailSender {
         Transport.send(message);
     }
 
+    /**
+     * Static method for automatic sending errors to developer
+     * @throws MessagingException error with message
+     * @throws IOException error when log file is not found
+     */
     public static void sendErrorsToDeveloper() throws MessagingException, IOException {
         Thread send = new Thread(new Runnable() {
             @Override

@@ -6,6 +6,9 @@ import com.labs.complex.being.Person;
 import com.labs.complex.command.Command;
 import com.labs.complex.exception.AccessDeniedException;
 
+/**
+ * Command class to show user info about himself
+ */
 public class CommandShowUserInfo implements Command {
     private User account;
 

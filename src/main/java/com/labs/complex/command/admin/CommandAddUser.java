@@ -14,6 +14,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
+/**
+ * Command class to add new user
+ */
 public class CommandAddUser implements Command {
     private Admin account;
     private String login;

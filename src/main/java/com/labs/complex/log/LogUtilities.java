@@ -6,6 +6,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+/**
+ * Class which has static methods for better logging
+ */
 public class LogUtilities {
     private static FileHandler fileHandler = null;
 
@@ -19,6 +22,10 @@ public class LogUtilities {
         }
     }
 
+    /**
+     * Setup default file handler for logger, level and disable parent handlers
+     * @param logger logger on which changes are to be performed
+     */
     public static void setupLogger(Logger logger) {
         logger.setUseParentHandlers(false);
         logger.addHandler(fileHandler);

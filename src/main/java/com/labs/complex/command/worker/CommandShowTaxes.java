@@ -10,6 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Command class for showing all possible taxes
+ */
 public class CommandShowTaxes implements Command {
     private Worker account;
 

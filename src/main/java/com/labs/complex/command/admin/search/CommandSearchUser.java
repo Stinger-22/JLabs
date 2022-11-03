@@ -11,6 +11,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Command class for searching user by String object
+ */
 public class CommandSearchUser implements Command {
     private Admin account;
     private Object filter;

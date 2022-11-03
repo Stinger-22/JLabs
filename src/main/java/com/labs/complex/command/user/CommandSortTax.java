@@ -7,6 +7,9 @@ import com.labs.complex.exception.AccessDeniedException;
 
 import java.util.Collections;
 
+/**
+ * Command class for sorting user taxes by value
+ */
 public class CommandSortTax implements Command {
     private User account;
 

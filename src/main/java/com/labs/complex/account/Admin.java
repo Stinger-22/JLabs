@@ -2,9 +2,16 @@ package com.labs.complex.account;
 
 import java.util.Objects;
 
+/**
+ * Class which represent admin account
+ */
 public class Admin implements IAccount {
     private String login;
 
+    /**
+     * Admin account constructor
+     * @param login admin' login
+     */
     public Admin(String login) {
         this.login = login;
     }

@@ -27,7 +27,12 @@ public class TestApplication {
                 "2\n" +
                 "3\n" +
                 "4\n" +
+                "1\n" +
                 "Test\n" +
+                "4\n" +
+                "2\n" +
+                "0\n" +
+                "10\n" +
                 "5\n" +
                 "6\n" +
                 "7\n" +

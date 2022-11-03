@@ -9,6 +9,9 @@ import com.labs.complex.exception.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Command class for searching tab by name
+ */
 public class CommandSearchTaxName implements Command {
     private User account;
     private String filter;
@@ -32,6 +35,10 @@ public class CommandSearchTaxName implements Command {
         }
     }
 
+    /**
+     * Get found taxes
+     * @return found taxes
+     */
     public List<Tax> getTaxList() {
         return taxList;
     }

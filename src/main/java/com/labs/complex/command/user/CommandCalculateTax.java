@@ -15,6 +15,9 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Command class for calculating overall tax value
+ */
 public class CommandCalculateTax implements Command {
     private User account;
     private double value = 0;
@@ -59,6 +62,10 @@ public class CommandCalculateTax implements Command {
         }
     }
 
+    /**
+     * Get overall tax value
+     * @return overall tax value
+     */
     public double getValue() {
         return value;
     }

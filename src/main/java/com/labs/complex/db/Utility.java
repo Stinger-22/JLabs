@@ -3,7 +3,15 @@ package com.labs.complex.db;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Utility class which has only static methods for better interacting with database
+ */
 public class Utility {
+    /**
+     * Print found user's info
+     * @param r resultSet of found users
+     * @throws SQLException exception is thrown when there is problems with query or database connection
+     */
     public static void printSearchUser(ResultSet r) throws SQLException {
         for (int i = 1; r.next(); i++) {
             System.out.printf("N:%d\nAccountID: %d\nLogin: %s\nPassword: %s\nName: %s\nSurname: %s\nSalary: %.2f\n" +

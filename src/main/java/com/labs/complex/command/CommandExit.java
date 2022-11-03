@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Command class to exit from application
+ */
 public class CommandExit implements Command {
     private Application application;
 

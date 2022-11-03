@@ -12,6 +12,9 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Command class to show available actions
+ */
 public class CommandShowActions implements Command {
     private User account;
 

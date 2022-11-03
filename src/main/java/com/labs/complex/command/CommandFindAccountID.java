@@ -10,6 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Command class for finding AccountID by login
+ */
 public class CommandFindAccountID implements Command {
     private IAccount account;
     private String login;

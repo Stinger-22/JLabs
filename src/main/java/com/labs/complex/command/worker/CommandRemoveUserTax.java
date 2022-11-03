@@ -10,6 +10,9 @@ import com.labs.complex.exception.AccessDeniedException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * Command class for removing user tax
+ */
 public class CommandRemoveUserTax implements Command {
     private Worker account;
     private String login;

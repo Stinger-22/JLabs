@@ -10,6 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Command class for showing all possible benefits
+ */
 public class CommandShowBenefits implements Command {
     private Worker account;
 
