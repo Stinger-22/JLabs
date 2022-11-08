@@ -1,12 +1,14 @@
 package com.labs.complex.being;
 
+import com.labs.complex.account.User;
+
 import java.sql.Date;
 import java.util.Objects;
 
 /**
  * Class which represents user actions
  */
-public class Action {
+public class Action implements Calculatable {
     private String name;
     private int value;
     private Date date;
@@ -69,5 +71,10 @@ public class Action {
     @Override
     public String toString() {
         return "Action{name='" + name + "', value=" + value + ", date=" + date + '}';
+    }
+
+    @Override
+    public double calculate(User user) {
+        return this.getValue() * this.getPercent();
     }
 }

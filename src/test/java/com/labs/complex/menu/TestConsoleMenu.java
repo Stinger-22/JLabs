@@ -49,7 +49,8 @@ public class TestConsoleMenu {
                 "7. Show all actions\r\n" +
                 "8. Add action\r\n" +
                 "9. Show my actions\r\n" +
-                "10. Log out\r\n" +
+                "10. Create pdf\r\n" +
+                "11. Log out\r\n" +
                 "> ";
         menu.show(new User(null, null, null, null, null));
         assertEquals(menuView, out.toString());

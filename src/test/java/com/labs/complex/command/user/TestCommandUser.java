@@ -60,7 +60,7 @@ public class TestCommandUser {
     @Test
     public void testCalculateTax() throws AccessDeniedException {
         new CommandLogin(application, "TestPerson1", "testperson1").execute();
-        CommandCalculateTax command = new CommandCalculateTax(application.getAccount());
+        CommandCalculateTotalTax command = new CommandCalculateTotalTax(application.getAccount());
         command.execute();
 
         assertEquals(55.0, command.getValue(), 0.001);
@@ -124,7 +124,7 @@ public class TestCommandUser {
             fail("Another type of account has access to CommandSortTax");
         } catch (AccessDeniedException ignored) {}
         try {
-            new CommandCalculateTax(application.getAccount()).execute();
+            new CommandCalculateTotalTax(application.getAccount()).execute();
             fail("Another type of account has access to CommandSortTax");
         } catch (AccessDeniedException ignored) {}
     }

@@ -3,6 +3,7 @@ package com.labs.complex.command.user;
 import com.labs.complex.account.IAccount;
 import com.labs.complex.account.User;
 import com.labs.complex.being.Action;
+import com.labs.complex.being.Calculatable;
 import com.labs.complex.being.Tax;
 import com.labs.complex.command.Command;
 import com.labs.complex.db.DBConnection;
@@ -12,19 +13,22 @@ import com.labs.complex.log.LogUtilities;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * Command class for calculating overall tax value
  */
-public class CommandCalculateTax implements Command {
+public class CommandCalculateTotalTax implements Command {
     private User account;
     private double value = 0;
 
-    private static final Logger logger = Logger.getLogger(CommandCalculateTax.class.getName());
+    private static final Logger logger = Logger.getLogger(CommandCalculateTotalTax.class.getName());
 
-    public CommandCalculateTax(IAccount account) throws AccessDeniedException {
+    public CommandCalculateTotalTax(IAccount account) throws AccessDeniedException {
         if (!(account instanceof User)) {
             throw new AccessDeniedException(account);
         }
@@ -35,12 +39,7 @@ public class CommandCalculateTax implements Command {
     public void execute() {
         LogUtilities.setupLogger(logger);
         for (Tax tax : account.getTaxList()) {
-            if (tax.isAbsolute()) {
-                value += tax.getValue();
-            }
-            else {
-                value += account.getPerson().getSalary() / 100.0 * tax.getValue();
-            }
+            value += tax.calculate(account);
         }
         PreparedStatement statement;
         String dateDiff = "SELECT DATEDIFF(month, GETDATE(), ?)";
@@ -52,7 +51,7 @@ public class CommandCalculateTax implements Command {
                 resultSet = statement.executeQuery();
                 resultSet.next();
                 if (resultSet.getInt(1) == 0) {
-                    value += action.getValue() * action.getPercent();
+                    value += action.calculate(account);
                 }
             }
             statement.close();

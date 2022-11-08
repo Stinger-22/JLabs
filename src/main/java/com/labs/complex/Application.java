@@ -322,7 +322,7 @@ public class Application {
                 break;
             case 6:
                 logger.log(Level.INFO, "SELECTED CommandCalculateTax");
-                CommandCalculateTax commandCalculateTax = new CommandCalculateTax(account);
+                CommandCalculateTotalTax commandCalculateTax = new CommandCalculateTotalTax(account);
                 menu.selectCommand(commandCalculateTax);
                 System.out.println("Month tax: " + commandCalculateTax.getValue());
                 break;

@@ -1,11 +1,13 @@
 package com.labs.complex.being;
 
+import com.labs.complex.account.User;
+
 import java.util.Objects;
 
 /**
  * Class which represents different taxes
  */
-public class Tax implements Comparable<Tax> {
+public class Tax implements Comparable<Tax>, Calculatable {
     private String description;
     private int value;
     private boolean absolute;
@@ -63,5 +65,15 @@ public class Tax implements Comparable<Tax> {
     public String toString() {
         return "Tax{description='" + description + '\'' +
                 ", value=" + value + ", absolute=" + absolute + '}';
+    }
+
+    @Override
+    public double calculate(User user) {
+        if (this.isAbsolute()) {
+            return this.getValue();
+        }
+        else {
+            return user.getPerson().getSalary() / 100.0 * this.getValue();
+        }
     }
 }
