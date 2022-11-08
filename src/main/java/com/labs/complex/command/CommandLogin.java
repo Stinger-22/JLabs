@@ -168,7 +168,7 @@ public class CommandLogin implements Command {
 
         statement.close();
         // List action
-        String queryAction = "SELECT [Name], [Value], [Date] FROM [Person].[PersonAction] [PersonAction] " +
+        String queryAction = "SELECT [Name], [Value], [Date], [percent] FROM [Person].[PersonAction] [PersonAction] " +
                 "INNER JOIN [Action].[Action] [Action] ON [Action].[ActionID] = PersonAction.[ActionID] " +
                 "WHERE [PersonID] = ?";
         statement = DBConnection.getInstance().prepareStatement(queryAction);
@@ -176,7 +176,7 @@ public class CommandLogin implements Command {
 
         r = statement.executeQuery();
         while (r.next()) {
-            actionList.add(new Action(r.getString(1), r.getInt(2), r.getDate(3)));
+            actionList.add(new Action(r.getString(1), r.getInt(2), r.getDate(3), r.getFloat(4)));
         }
 
         statement.close();

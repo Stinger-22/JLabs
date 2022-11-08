@@ -64,7 +64,8 @@ public class ConsoleMenu implements Menu {
         System.out.println("7. Show all actions");
         System.out.println("8. Add action");
         System.out.println("9. Show my actions");
-        System.out.println("10. Log out");
+        System.out.println("10. Create pdf");
+        System.out.println("11. Log out");
         System.out.print("> ");
     }
 }

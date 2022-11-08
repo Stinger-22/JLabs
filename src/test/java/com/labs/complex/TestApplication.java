@@ -43,6 +43,7 @@ public class TestApplication {
                 "10\n" +
                 "9\n" +
                 "10\n" +
+                "11\n" +
                 "2\n";
         ByteArrayInputStream userInput = new ByteArrayInputStream(input.getBytes());
         System.setIn(userInput);

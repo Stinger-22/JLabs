@@ -31,8 +31,8 @@ public class TestBeing {
         int value = 45;
         java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
 
-        Action action = new Action(name, value, date);
-        Action action1 = new Action("Jack", 45, date);
+        Action action = new Action(name, value, date, (float) 0.1);
+        Action action1 = new Action("Jack", 45, date, (float) 0.1);
         assertEquals(action.getName(), name);
         assertEquals(action.getValue(), value, 0.001);
         assertEquals(action.getDate(), date);

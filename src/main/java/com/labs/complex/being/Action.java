@@ -10,17 +10,20 @@ public class Action {
     private String name;
     private int value;
     private Date date;
+    private float percent;
 
     /**
      * Action constructor
      * @param name name of action
      * @param value value of action
      * @param date date when action took place
+     * @param percent percent from value as tax
      */
-    public Action(String name, int value, Date date) {
+    public Action(String name, int value, Date date, float percent) {
         this.name = name;
         this.value = value;
         this.date = date;
+        this.percent = percent;
     }
 
     /**
@@ -45,6 +48,14 @@ public class Action {
      */
     public Date getDate() {
         return date;
+    }
+
+    /**
+     * Geet percent from action
+     * @return percent from action
+     */
+    public float getPercent() {
+        return percent;
     }
 
     @Override

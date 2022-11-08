@@ -22,7 +22,7 @@ public class TestUser {
 
         taxList.add(new Tax("Some tax", 100, true));
         benefitList.add(new Benefit("Some benefit"));
-        actionList.add(new Action("Get money", 100, new java.sql.Date(System.currentTimeMillis()) ));
+        actionList.add(new Action("Get money", 100, new java.sql.Date(System.currentTimeMillis()), (float) 0.1));
 
         User user = new User(login, person, taxList, benefitList, actionList);
 

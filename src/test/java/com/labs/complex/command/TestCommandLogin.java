@@ -68,7 +68,7 @@ public class TestCommandLogin {
         benefitList.add(new Benefit("TestBenefit"));
         List<Action> actionList = new ArrayList<>();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        actionList.add(new Action("TestAction", 10, new java.sql.Date(dateFormat.parse("2022-10-30").getTime())));
+        actionList.add(new Action("TestAction", 10, new java.sql.Date(dateFormat.parse("2022-10-30").getTime()), (float) 0.1));
         User user = new User("TestPerson", person, taxList, benefitList, actionList);
         assertEquals(user, application.getAccount());
     }

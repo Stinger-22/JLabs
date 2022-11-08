@@ -349,6 +349,10 @@ public class Application {
                 menu.selectCommand(new CommandShowAction(account));
                 break;
             case 10:
+                logger.log(Level.INFO, "SELECTED CommandCreatePDF");
+                menu.selectCommand(new CommandCreatePDF(account));
+                break;
+            case 11:
                 logger.log(Level.INFO, "SELECTED CommandLogout");
                 menu.selectCommand(new CommandLogout(this));
                 break;
