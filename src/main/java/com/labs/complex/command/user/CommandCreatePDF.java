@@ -4,7 +4,6 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.pdf.draw.DottedLineSeparator;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 import com.labs.complex.account.IAccount;
 import com.labs.complex.account.User;
@@ -22,7 +21,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.logging.Level;
 import java.util.stream.Stream;
 
 public class CommandCreatePDF implements Command {
@@ -66,7 +64,10 @@ public class CommandCreatePDF implements Command {
             addTax(table);
             middle.add("\n");
             middle.add(table);
-
+            middle.add("\n");
+            CommandCalculateTotalTax command = new CommandCalculateTotalTax(account);
+            command.execute();
+            middle.add("Total tax: " + Math.floor(command.getValue() * 100) / 100);
             document.add(middle);
             document.add(new Chunk("\n\n\n\n\n"));
 
@@ -77,7 +78,7 @@ public class CommandCreatePDF implements Command {
 
             document.close();
         }
-        catch (IOException | DocumentException exception) {
+        catch (IOException | DocumentException | AccessDeniedException exception) {
             exception.printStackTrace();
         }
     }
